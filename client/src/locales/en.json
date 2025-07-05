@@ -1,0 +1,169 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "signup": "Sign up"
+  },
+
+  "hero": {
+    "label": "Trusted BHMS Care",
+    "headingPrefix": "Natural Healing by",
+    "typewriter": ["Homeopathy", "Dr. Rashi"],
+    "description": "Experience personalized homeopathy treatments, online consultations, and complete care for your wellness journey.",
+    "book": "Book Appointment",
+    "view": "View Treatments"
+  },
+
+  "about": {
+    "title": "About",
+    "name": "Dr. Rashi Shrivastava",
+    "intro": "{{name}} is a certified BHMS practitioner with a passion for natural healing and holistic wellness. With compassionate care and a commitment to personalized treatment, she has guided hundreds of patients toward better health and long-term well-being.",
+    "cards": [
+      {
+        "title": "Personalized Treatment",
+        "desc": "Every patient receives a custom plan tailored to their health condition and lifestyle."
+      },
+      {
+        "title": "Natural Healing",
+        "desc": "Focused on long-term wellness using proven homeopathic remedies and holistic care."
+      },
+      {
+        "title": "Holistic Wellness",
+        "desc": "Combining physical, mental, and emotional balance for complete healing."
+      },
+      {
+        "title": "Patient-Centered Care",
+        "desc": "Compassionate care that treats every individual with respect and empathy."
+      }
+    ]
+  },
+  
+  "contact": {
+    "title": "Let’s Talk",
+    "description": "Whether you have questions about symptoms, treatment plans, or need urgent help — we’re just a message away. Our homeopathy specialist ensures compassionate care.",
+    "phone": "+91 99999 99999",
+    "email": "rashi.bhms@example.com",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "message": "Write your message...",
+      "submit": "Send Message"
+    }
+  },
+  "footer": {
+    "about": "Dr. Rashi Shrivastava (BHMS) offers holistic healing with compassionate homeopathic care for your wellness.",
+    "company": "Company",
+    "support": "Support",
+    "newsletter": {
+      "title": "Stay Updated",
+      "desc": "Subscribe to our newsletter for inspiration and special offers.",
+      "placeholder": "Your email"
+    },
+    "contact": "Contact Us",
+    "help": "Help Center",
+    "safety": "Safety Information",
+    "cancel": "Cancellation Options",
+    "aboutUs": "About",
+    "careers": "Careers",
+    "press": "Press",
+    "blog": "Blog",
+    "partners": "Partners",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "sitemap": "Sitemap",
+    "copyright": "All rights reserved."
+  },
+  
+  "title": "Let’s Talk",
+  "description": "Whether you have questions about symptoms, treatment plans, or need urgent help — we’re just a message away. Our homeopathy specialist ensures compassionate care.",
+  "phone": "+91 99999 99999",
+  "email": "rashi.bhms@example.com",
+  "form": {
+    "name": "Full Name",
+    "email": "Email Address",
+    "message": "Write your message...",
+    "submit": "Send Message"
+  },
+ 
+  "clinicAddress": {
+  "addressTitle": "Clinic Address",
+  "addressLine1": "Dr. Rashi Homeopathy Clinic",
+  "addressLine2": "123, New Palasia, Indore, MP - 452001",
+  "mapSrc": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.3478260599365!2d75.86769307508866!3d22.754998179351095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd065d3a09d3%3A0xf7d9a2c0c51a6a35!2sNew%20Palasia%2C%20Indore%2C%20Madhya%20Pradesh%20452001!5e0!3m2!1sen!2sin!4v1720079595559!5m2!1sen!2sin"
+
+},
+
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Personalized and natural care designed for holistic healing and wellness.",
+    "chronic": {
+      "title": "Chronic Illness Care",
+      "desc": "Effective treatment for asthma, diabetes, thyroid, and more."
+    },
+    "acute": {
+      "title": "Acute Treatment",
+      "desc": "Quick relief for fever, cold, cough, and seasonal infections."
+    },
+    "women": {
+      "title": "Women's Health",
+      "desc": "Safe homeopathy for PCOD, hormonal issues, and fertility."
+    },
+    "child": {
+      "title": "Child Wellness",
+      "desc": "Gentle remedies for immunity, childhood diseases, and growth."
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": {
+      "question": "What conditions can homeopathy treat?",
+      "answer": "Homeopathy can help with chronic illnesses, allergies, skin issues, and more by stimulating the body's natural healing."
+    },
+    "q2": {
+      "question": "Is homeopathy safe for children?",
+      "answer": "Yes, homeopathy is gentle and safe for children and infants with no known side effects."
+    },
+    "q3": {
+      "question": "How long does treatment take?",
+      "answer": "It depends on your condition, but many patients see improvements within a few weeks."
+    },
+    "q4": {
+      "question": "Do I need to stop my current medication?",
+      "answer": "No. Homeopathy can be taken alongside conventional medicine, but consult with your doctor first."
+    }
+  },
+ "benefits": {
+  "title": "Why Choose Us",
+  "personal": {
+    "title": "Personalized Care",
+    "desc": "Tailored treatments for your unique health journey."
+  },
+  "safe": {
+    "title": "Safe & Natural",
+    "desc": "Gentle remedies for all ages, without side effects."
+  },
+  "holistic": {
+    "title": "Holistic Healing",
+    "desc": "We treat the root cause, not just symptoms."
+  },
+  "affordable": {
+    "title": "Affordable",
+    "desc": "Best care at budget-friendly prices."
+  },
+  "compassion": {
+    "title": "Compassionate Approach",
+    "desc": "Empathy and care in every consultation."
+  },
+  "trusted": {
+    "title": "Trusted Expertise",
+    "desc": "Thousands of patients treated with confidence."
+  }
+}
+
+
+}
+
+
