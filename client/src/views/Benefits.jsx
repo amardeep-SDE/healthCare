@@ -21,13 +21,12 @@ const benefitItems = [
 
 const cardVariants = {
   offscreen: {
-    y: 80,
+    y: 60,
     opacity: 0,
   },
   onscreen: {
     y: 0,
     opacity: 1,
-    rotate: 0,
     transition: {
       type: "spring",
       bounce: 0.4,
@@ -42,15 +41,15 @@ const Benefits = () => {
   return (
     <section
       id="benefits"
-      className="bg-gradient-to-br from-[#f0f4f8] via-[#e8f5e9] to-[#e3f2fd] dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-20 px-6 sm:px-10 md:px-24"
+      className="bg-gradient-to-br from-[#f5f7fa] via-[#e0f7fa] to-[#f1f8e9] dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-20 px-6 sm:px-10 md:px-24"
     >
-      <div className="max-w-6xl mx-auto text-center">
+      <div className="max-w-7xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-4xl sm:text-5xl font-bold text-gray-800 dark:text-white mb-16"
+          className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-400 dark:from-cyan-400 dark:to-blue-500 mb-16"
         >
           {t("benefits.title")}
         </motion.h2>
@@ -62,28 +61,28 @@ const Benefits = () => {
             return (
               <motion.div
                 key={index}
-                className="relative rounded-3xl shadow-lg p-8 flex flex-col items-center justify-center text-center transition-all group overflow-hidden"
+                className="relative rounded-3xl p-8 border border-white/40 dark:border-white/10 shadow-xl backdrop-blur-md bg-white/50 dark:bg-slate-800/30 transition-all hover:-translate-y-2 hover:shadow-2xl group overflow-hidden"
                 style={{ background }}
                 initial="offscreen"
                 whileInView="onscreen"
                 viewport={{ once: true, amount: 0.3 }}
                 variants={cardVariants}
               >
-                {/* Animated Border Glow */}
-                <div className="absolute inset-0 rounded-3xl border border-transparent group-hover:border-white/30 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-500"></div>
+                {/* Glow border */}
+                <div className="absolute inset-0 z-0 rounded-3xl border border-transparent group-hover:border-white/30 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-all duration-700"></div>
 
                 {/* Icon */}
-                <div className="text-4xl text-indigo-700 dark:text-indigo-300 mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                <div className="relative z-10 text-5xl text-indigo-600 dark:text-indigo-300 mb-4 transform group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                <h3 className="relative z-10 text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   {t(`benefits.${item.key}.title`)}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                <p className="relative z-10 text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                   {t(`benefits.${item.key}.desc`)}
                 </p>
               </motion.div>
