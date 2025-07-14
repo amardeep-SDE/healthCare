@@ -113,16 +113,17 @@ const Footer = () => {
             {t("footer.newsletter.title")}
           </p>
           <p className="mt-3 text-sm">{t("footer.newsletter.desc")}</p>
-          <div className="flex items-center mt-4">
-            <input
-              type="text"
-              className="bg-white dark:bg-gray-700 rounded-l border border-gray-300 dark:border-gray-600 h-9 px-3 outline-none text-sm w-full"
-              placeholder={t("footer.newsletter.placeholder")}
-            />
-            <button className="flex items-center justify-center bg-black dark:bg-indigo-600 h-9 w-9 rounded-r">
-              <FaArrowRight className="text-white text-sm" />
-            </button>
-          </div>
+         <div className="flex items-center mt-4 group">
+  <input
+    type="email"
+    className="w-full px-4 py-2 rounded-l-md text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-indigo-500 transition duration-200 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+    placeholder={t("footer.newsletter.placeholder")}
+  />
+  <button className="h-full px-3 flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 rounded-r-md">
+    <FaArrowRight className="text-white text-lg transform group-hover:translate-x-1 transition-transform duration-200" />
+  </button>
+</div>
+
         </div>
       </div>
 
