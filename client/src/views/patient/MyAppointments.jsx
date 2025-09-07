@@ -23,45 +23,58 @@ const appointments = [
 
 const MyAppointments = () => {
   return (
-    <section className="px-6 sm:px-10 md:px-24 py-16 bg-[#f8fafc] min-h-screen">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">My Appointments</h2>
-      <div className="grid gap-6 md:grid-cols-2">
+    <section className="px-6 sm:px-10 md:px-24 py-16 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 min-h-screen">
+      <h2 className="text-3xl font-bold mb-10 text-gray-800 text-center">
+        My Appointments
+      </h2>
+      <div className="grid gap-8 md:grid-cols-2">
         {appointments.map((appt) => (
           <div
             key={appt.id}
-            className="flex flex-col sm:flex-row bg-white shadow-lg rounded-xl p-4 space-y-4 sm:space-y-0 sm:space-x-6 items-center justify-between"
+            className="group relative flex flex-col sm:flex-row bg-white/80 backdrop-blur-md shadow-lg hover:shadow-2xl rounded-2xl p-6 space-y-4 sm:space-y-0 sm:space-x-6 items-center transition-all duration-300 border border-gray-100"
           >
+            {/* Doctor Image */}
             <img
               src={appt.image}
               alt={appt.doctor}
-              className="w-24 h-24 object-cover rounded-xl border"
+              className="w-24 h-24 object-cover rounded-2xl border-2 border-indigo-100 group-hover:scale-105 transition-transform duration-300"
             />
+
+            {/* Info Section */}
             <div className="flex-1 space-y-2 text-center sm:text-left">
-              <h3 className="text-lg font-semibold text-gray-800">{appt.doctor}</h3>
+              <h3 className="text-xl font-semibold text-gray-900">
+                {appt.doctor}
+              </h3>
               <p className="text-sm text-gray-600">
-                <strong>Date:</strong> {appt.date}
+                📅 <strong>{appt.date}</strong>
               </p>
               <p className="text-sm text-gray-600">
-                <strong>Time:</strong> {appt.time}
+                ⏰ <strong>{appt.time}</strong>
               </p>
               <p className="text-sm text-gray-600">
-                <strong>Fee:</strong> ₹{appt.fee}
+                💰 Fee: <strong>₹{appt.fee}</strong>
               </p>
-              <p
-                className={`text-sm font-medium ${
-                  appt.status === "Paid" ? "text-green-600" : "text-yellow-600"
+              <span
+                className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                  appt.status === "Paid"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-yellow-100 text-yellow-700"
                 }`}
               >
                 {appt.status}
-              </p>
+              </span>
             </div>
+
+            {/* Action Buttons */}
             <div className="flex flex-col items-center gap-2">
               {appt.status !== "Paid" && (
-                <button className="bg-indigo-600 text-white px-4 py-1.5 rounded-full text-sm hover:bg-indigo-700 transition">
+                <button className="bg-gradient-to-r from-indigo-500 to-indigo-700 text-white px-5 py-2 rounded-full text-sm font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
                   Pay Now
                 </button>
               )}
-              <button className="text-red-500 hover:underline text-sm">Cancel</button>
+              <button className="text-red-500 hover:text-red-600 text-sm font-medium transition">
+                Cancel
+              </button>
             </div>
           </div>
         ))}
