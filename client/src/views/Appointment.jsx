@@ -17,56 +17,56 @@ const Appointment = () => {
   const times = ["10:00 am", "12:00 pm", "01:00 pm", "02:00 pm"];
 
   return (
-    <section className="min-h-screen bg-white px-6 sm:px-10 md:px-24 py-16">
-      <div className="max-w-5xl mx-auto bg-white shadow-xl rounded-xl p-8 flex flex-col lg:flex-row gap-10">
-      {/* <div>
-      <h1 className="text-3xl font-bold text-gray-800">Book an Appointment </h1>
-
-      </div> */}
+    <section className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50 px-6 sm:px-10 md:px-24 py-16">
+      <div className="max-w-5xl mx-auto bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl p-8 flex flex-col lg:flex-row gap-10 border border-gray-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300">
         {/* Doctor Image */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+        <div className="flex flex-col items-center lg:items-start gap-6">
           <img
             src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
             alt="Doctor"
-            className="w-56 h-56 rounded-xl object-cover bg-indigo-100 p-4 "
+            className="w-48 h-48 rounded-2xl object-cover bg-indigo-50 p-4 border border-gray-200 shadow-md"
           />
         </div>
 
         {/* Doctor Info and Booking */}
         <div className="flex-grow">
-          <h2 className="text-2xl font-bold text-gray-800">
-            Dr. Rashi Shrivastava <span className="text-blue-600">✓</span>
+          <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+            Dr. Rashi Shrivastava{" "}
+            <span className="text-blue-600 text-lg">✔</span>
           </h2>
-          <p className="text-gray-600 text-sm">BHMS - Homeopathy | 5+ Years</p>
+          <p className="text-gray-600 text-sm mb-4">
+            BHMS - Homeopathy | <span className="font-medium">5+ Years Experience</span>
+          </p>
 
-          <div className="mt-4">
-            <p className="font-semibold text-gray-700 mb-1">
-              About <span className="text-gray-500">ℹ️</span>
-            </p>
-            <p className="text-gray-500 text-sm leading-relaxed">
+          {/* About */}
+          <div className="mb-5">
+            <h3 className="font-semibold text-gray-700 mb-1 flex items-center gap-1">
+              About <span className="text-gray-400">ℹ️</span>
+            </h3>
+            <p className="text-gray-600 text-sm leading-relaxed">
               Dr. Rashi is committed to holistic healing through homeopathy. Her
               approach emphasizes natural remedies, deep listening, and
-              customized care plans for both acute and chronic health
-              conditions.
+              customized care plans for both acute and chronic conditions.
             </p>
           </div>
 
-          <p className="mt-4 font-medium text-gray-800">
-            Appointment Fee: ₹500
+          {/* Fee */}
+          <p className="mb-6 font-medium text-gray-900 text-lg">
+            Appointment Fee: <span className="text-indigo-600">₹500</span>
           </p>
 
           {/* Day Slots */}
-          <div className="mt-6">
-            <h3 className="font-semibold text-gray-800 mb-2">Booking slots</h3>
+          <div className="mb-6">
+            <h3 className="font-semibold text-gray-800 mb-2">Select a Day</h3>
             <div className="flex gap-3 overflow-x-auto pb-2">
               {days.map((day) => (
                 <button
                   key={day.label}
                   onClick={() => setSelectedDay(day.label)}
-                  className={`flex flex-col items-center px-3 py-2 rounded-xl border text-sm min-w-[50px] ${
+                  className={`flex flex-col items-center px-4 py-2 rounded-xl text-sm min-w-[60px] font-medium shadow-sm transition-all ${
                     selectedDay === day.label
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-100 text-gray-700"
+                      ? "bg-indigo-600 text-white shadow-md"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   <span>{day.label}</span>
@@ -77,27 +77,31 @@ const Appointment = () => {
           </div>
 
           {/* Time Slots */}
-          <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
-            {times.map((time) => (
-              <button
-                key={time}
-                onClick={() => setSelectedTime(time)}
-                className={`text-sm px-3 py-2 rounded-full border transition ${
-                  selectedTime === time
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 text-gray-700"
-                }`}
-              >
-                {time}
-              </button>
-            ))}
+          <div className="mb-8">
+            <h3 className="font-semibold text-gray-800 mb-2">Select a Time</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {times.map((time) => (
+                <button
+                  key={time}
+                  onClick={() => setSelectedTime(time)}
+                  className={`text-sm px-4 py-2 rounded-full font-medium border transition-all ${
+                    selectedTime === time
+                      ? "bg-indigo-600 text-white border-indigo-600 shadow-md"
+                      : "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200"
+                  }`}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
           </div>
 
+          {/* Book Button */}
           <button
             type="button"
-            className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-semibold w-full sm:w-auto"
+            className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            Book an Appointment
+            Book Appointment
           </button>
         </div>
       </div>
