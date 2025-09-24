@@ -21,51 +21,73 @@ const FAQs = () => {
   return (
     <section
       id="faqs"
-      className="bg-gradient-to-b from-white via-blue-50 to-green-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-20 px-6 sm:px-10 md:px-24"
+      className="relative bg-gradient-to-b from-white via-blue-50 to-green-50 
+                 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 
+                 py-20 px-6 sm:px-10 md:px-24"
     >
       <div className="max-w-5xl mx-auto">
+        {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-4xl sm:text-5xl font-bold text-center text-gray-800 dark:text-white mb-12"
+          className="text-4xl sm:text-5xl font-extrabold text-center 
+                     text-gray-800 dark:text-white mb-6"
         >
           {t("faq.title")}
         </motion.h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 mx-auto mb-12 rounded-full"></div>
 
+        {/* FAQs */}
         <div className="space-y-6">
           {faqs.map((faq, index) => (
-            <div
+            <motion.div
               key={faq.key}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md 
+                         rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 
+                         hover:shadow-2xl transition-all duration-300"
             >
+              {/* Question Button */}
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center px-6 py-5 text-left text-lg font-semibold text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                className="w-full flex justify-between items-center px-6 py-5 
+                           text-left text-lg sm:text-xl font-semibold 
+                           text-gray-800 dark:text-gray-100 
+                           hover:bg-gray-50 dark:hover:bg-gray-700/40 transition"
               >
                 <span>{t(`faq.${faq.key}.question`)}</span>
-                {activeIndex === index ? (
-                  <FiMinus className="text-xl" />
-                ) : (
-                  <FiPlus className="text-xl" />
-                )}
+                <motion.div
+                  animate={{ rotate: activeIndex === index ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {activeIndex === index ? (
+                    <FiMinus className="text-2xl text-indigo-600 dark:text-cyan-400" />
+                  ) : (
+                    <FiPlus className="text-2xl text-indigo-600 dark:text-cyan-400" />
+                  )}
+                </motion.div>
               </button>
 
+              {/* Answer */}
               <AnimatePresence>
                 {activeIndex === index && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="px-6 pb-5 text-gray-600 dark:text-gray-300 text-base"
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="px-6 pb-5 text-gray-600 dark:text-gray-300 text-base leading-relaxed"
                   >
                     {t(`faq.${faq.key}.answer`)}
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
