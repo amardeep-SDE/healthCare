@@ -6,6 +6,7 @@ import PatientDashboard from "./views/patient/PatientDashboard";
 import Appointment from "./views/Appointment";
 import MyAppointments from "./views/patient/MyAppointments";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 const appRouter = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const App = () => {
     <>
       <RouterProvider router={appRouter} />
       <ScrollToTopButton />
+      <WhatsAppButton/>
     </>
   );
 };
