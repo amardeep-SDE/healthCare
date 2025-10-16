@@ -7,7 +7,7 @@ import Appointment from "./views/Appointment";
 import MyAppointments from "./views/patient/MyAppointments";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import WhatsAppButton from "./components/WhatsAppButton";
-
+import { Toaster } from 'react-hot-toast';
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -38,9 +38,10 @@ const appRouter = createBrowserRouter([
 const App = () => {
   return (
     <>
+    <Toaster position="top-right" reverseOrder={false} />
       <RouterProvider router={appRouter} />
       <ScrollToTopButton />
-      <WhatsAppButton/>
+      <WhatsAppButton />
     </>
   );
 };
