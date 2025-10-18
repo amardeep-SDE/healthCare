@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
-import ThemeToggle from "./ThemeToggle ";
+import { Link, useLocation } from "react-router-dom";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+import ThemeToggle from "../components/ThemeToggle ";
 import { useTranslation } from "react-i18next";
 
 const Header = () => {
@@ -11,6 +11,7 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState("HeroSection");
 
   const { t, i18n } = useTranslation();
+  const location = useLocation();
 
   const navLinkClasses = (section) =>
     `cursor-pointer pb-1 transition-all border-b-2 ${
@@ -20,27 +21,22 @@ const Header = () => {
     }`;
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
+    if (isMenuOpen) document.body.classList.add("overflow-hidden");
+    else document.body.classList.remove("overflow-hidden");
   }, [isMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const switchLanguage = (lang) => i18n.changeLanguage(lang);
+
+  // Landing page scroll links condition
+  const isLanding = location.pathname === "/";
 
   return (
     <section
@@ -62,39 +58,80 @@ const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-normal text-gray-900 dark:text-white">
-          <ScrollLink
-            to="HeroSection"
-            smooth
-            offset={-40}
-            duration={900}
-            className={navLinkClasses("HeroSection")}
-            onClick={() => setActiveSection("HeroSection")}
-          >
-            {t("nav.home")}
-          </ScrollLink>
+          {isLanding ? (
+            <>
+              <ScrollLink
+                to="HeroSection"
+                smooth
+                offset={-40}
+                duration={900}
+                className={navLinkClasses("HeroSection")}
+                onClick={() => setActiveSection("HeroSection")}
+              >
+                {t("nav.home")}
+              </ScrollLink>
+              <ScrollLink
+                to="about"
+                smooth
+                offset={-40}
+                duration={900}
+                className={navLinkClasses("about")}
+                onClick={() => setActiveSection("about")}
+              >
+                {t("nav.about")}
+              </ScrollLink>
+              <ScrollLink
+                to="contact"
+                smooth
+                offset={-40}
+                duration={900}
+                className={navLinkClasses("contact")}
+                onClick={() => setActiveSection("contact")}
+              >
+                {t("nav.contact")}
+              </ScrollLink>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/"
+                className={navLinkClasses("HeroSection")}
+                onClick={() => setActiveSection("HeroSection")}
+              >
+                {t("nav.home")}
+              </Link>
+              <Link
+                to="/#about"
+                className={navLinkClasses("about")}
+                onClick={() => setActiveSection("about")}
+              >
+                {t("nav.about")}
+              </Link>
+              <Link
+                to="/#contact"
+                className={navLinkClasses("contact")}
+                onClick={() => setActiveSection("contact")}
+              >
+                {t("nav.contact")}
+              </Link>
+            </>
+          )}
 
-          <ScrollLink
-            to="about"
-            smooth
-            offset={-40}
-            duration={900}
-            className={navLinkClasses("about")}
-            onClick={() => setActiveSection("about")}
+          {/* Patient Pages */}
+          <Link
+            to="/appointment"
+            className={navLinkClasses("appointment")}
+            onClick={() => setActiveSection("appointment")}
           >
-            {t("nav.about")}
-          </ScrollLink>
-
-          <ScrollLink
-            to="contact"
-            smooth
-            offset={-40}
-            duration={900}
-            className={navLinkClasses("contact")}
-            onClick={() => setActiveSection("contact")}
+            {t("nav.bookAppointment") || "Book Appointment"}
+          </Link>
+          <Link
+            to="/my-appointments"
+            className={navLinkClasses("myAppointments")}
+            onClick={() => setActiveSection("myAppointments")}
           >
-            {t("nav.contact")}
-          </ScrollLink>
-
+            {t("nav.myAppointments") || "My Appointments"}
+          </Link>
           <Link
             to="/patient/dashboard"
             className={navLinkClasses("dashboard")}
@@ -145,62 +182,87 @@ const Header = () => {
             <AiOutlineClose size={28} />
           </button>
 
-          <ScrollLink
-            to="HeroSection"
-            smooth
-            offset={-40}
-            duration={900}
-            className="cursor-pointer hover:text-indigo-600"
+          {isLanding ? (
+            <>
+              <ScrollLink
+                to="HeroSection"
+                smooth
+                offset={-40}
+                duration={900}
+                className="cursor-pointer hover:text-indigo-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.home")}
+              </ScrollLink>
+              <ScrollLink
+                to="about"
+                smooth
+                offset={-40}
+                duration={900}
+                className="cursor-pointer hover:text-indigo-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.about")}
+              </ScrollLink>
+              <ScrollLink
+                to="contact"
+                smooth
+                offset={-40}
+                duration={900}
+                className="cursor-pointer hover:text-indigo-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.contact")}
+              </ScrollLink>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/"
+                className="hover:text-indigo-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.home")}
+              </Link>
+              <Link
+                to="/#about"
+                className="hover:text-indigo-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.about")}
+              </Link>
+              <Link
+                to="/#contact"
+                className="hover:text-indigo-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.contact")}
+              </Link>
+            </>
+          )}
+
+          {/* Patient Pages */}
+          <Link
+            to="/appointment"
+            className="hover:text-indigo-600"
             onClick={() => setIsMenuOpen(false)}
           >
-            {t("nav.home")}
-          </ScrollLink>
-          <ScrollLink
-            to="about"
-            smooth
-            offset={-40}
-            duration={900}
-            className="cursor-pointer hover:text-indigo-600"
+            Book Appointment
+          </Link>
+          <Link
+            to="/my-appointments"
+            className="hover:text-indigo-600"
             onClick={() => setIsMenuOpen(false)}
           >
-            {t("nav.about")}
-          </ScrollLink>
-          <ScrollLink
-            to="contact"
-            smooth
-            offset={-40}
-            duration={900}
-            className="cursor-pointer hover:text-indigo-600"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            {t("nav.contact")}
-          </ScrollLink>
+            My Appointments
+          </Link>
           <Link
             to="/patient/dashboard"
             className="hover:text-indigo-600"
             onClick={() => setIsMenuOpen(false)}
           >
-            {t("nav.dashboard")}
+            Dashboard
           </Link>
-          <div className="flex space-x-4 mt-4">
-            <Link
-              to="/login"
-              className="text-indigo-600 bg-indigo-100 px-4 py-2 rounded-full text-sm font-medium hover:bg-indigo-200 transition"
-            >
-              {t("nav.login")}
-            </Link>
-            <Link
-              to="/register"
-              className="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-indigo-700 transition"
-            >
-              {t("nav.signup")}
-            </Link>
-          </div>
-          {/* Language Switcher */}
-          <div className="flex gap-4 mt-6">
-            <button onClick={() => switchLanguage("en")}>EN</button>
-            <button onClick={() => switchLanguage("hi")}>हिंदी</button>
-          </div>
         </div>
       )}
     </section>
