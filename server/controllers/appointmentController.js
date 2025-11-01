@@ -1,27 +1,38 @@
 // controllers/appointmentController.js
-import axios from "axios";
+import Appointment from "../models/appointmentModel.js";
 
-// 📥 Calendly Webhook handler
 export const calendlyWebhook = async (req, res) => {
   try {
-    const eventData = req.body;
+    const payload = req.body;
 
-    console.log("📩 Webhook received:", eventData);
+    console.log("📩 Calendly Webhook Data:", payload);
 
-    // yahan tum DB me save kar sakte ho appointment
-    // For now just returning success
-    res.status(200).json({ message: "Webhook received successfully" });
+    // Example: Calendly webhook structure parsing
+    const event = payload?.payload?.event;
+    const invitee = payload?.payload?.invitee;
+
+    const appointment = new Appointment({
+      name: invitee?.name,
+      email: invitee?.email,
+      eventType: event?.event_type_name,
+      startTime: event?.start_time,
+      endTime: event?.end_time,
+    });
+
+    await appointment.save();
+
+    res.status(200).json({ message: "✅ Appointment saved successfully" });
   } catch (error) {
-    console.error("❌ Webhook error:", error.message);
+    console.error("❌ Webhook save error:", error.message);
     res.status(500).json({ error: "Server error" });
   }
 };
 
-// 📤 Get all appointments (for frontend)
+// Get all appointments
 export const getAllAppointments = async (req, res) => {
   try {
-    // Later: MongoDB se appointments fetch karenge
-    res.json([{ id: 1, name: "Dr. Rashi Shrivastava", time: "10:30 AM" }]);
+    const appointments = await Appointment.find().sort({ createdAt: -1 });
+    res.json(appointments);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
