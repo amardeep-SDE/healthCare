@@ -3,6 +3,8 @@
     "home": "Home",
     "about": "About",
     "contact": "Contact",
+    "bookAppointment": "Book Appointment",
+    "myAppointments": "My Appointments",
     "dashboard": "Dashboard",
     "login": "Login",
     "signup": "Sign up"
