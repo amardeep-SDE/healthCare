@@ -5,9 +5,16 @@ import Landing from "./views/Landing";
 import PatientDashboard from "./views/patient/PatientDashboard";
 import Appointment from "./views/Appointment";
 import MyAppointments from "./views/patient/MyAppointments";
+
+import Login from "./views/auth/Login";
+import Register from "./views/auth/Register";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import WhatsAppButton from "./components/WhatsAppButton";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -18,18 +25,38 @@ const appRouter = createBrowserRouter([
         element: <Landing />,
       },
 
+      // 🔐 Auth
       {
-        path: "/patient/dashboard",
-        element: <PatientDashboard />,
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
 
+      // 🔒 Protected Patient Routes
       {
-        path: "/appointment",
-        element: <Appointment />,
+        path: "/patient/dashboard",
+        element: (
+          <ProtectedRoute>
+            <PatientDashboard />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/my-appointments",
-        element: <MyAppointments />,
+        element: (
+          <ProtectedRoute>
+            <MyAppointments />
+          </ProtectedRoute>
+        ),
+      },
+
+      // 🌐 Public
+      {
+        path: "/appointment",
+        element: <Appointment />,
       },
     ],
   },
@@ -38,7 +65,7 @@ const appRouter = createBrowserRouter([
 const App = () => {
   return (
     <>
-    <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-right" />
       <RouterProvider router={appRouter} />
       <ScrollToTopButton />
       <WhatsAppButton />
