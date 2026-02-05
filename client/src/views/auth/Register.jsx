@@ -1,77 +1,127 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 const Register = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const validate = () => {
+    const err = {};
+    if (!form.name) err.name = "Name is required";
+    if (!form.email) err.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email))
+      err.email = "Enter valid email";
+    if (!form.password) err.password = "Password is required";
+    else if (form.password.length < 6)
+      err.password = "Minimum 6 characters required";
 
-  const handleSubmit = (e) => {
+    setErrors(err);
+    return Object.keys(err).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: connect with backend
-    console.log(form);
+    if (!validate()) return;
+
+    try {
+      setLoading(true);
+
+      // 🔗 API call later
+      await new Promise((res) => setTimeout(res, 1200));
+
+      toast.success("Account created successfully 🎉");
+    } catch (err) {
+      // 🔥 API ERROR → TOAST
+      toast.error("User already exists");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-[radial-gradient(circle_at_top,_#eef2ff,_#ffffff_70%)] px-4">
-      <div className="w-full max-w-md bg-white/70 backdrop-blur-xl border border-white/40 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8">
-        
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-extrabold text-gray-900">
-            Create Account 🩺
-          </h2>
-          <p className="text-gray-500 mt-2">
-            Book appointments and track your health
-          </p>
-        </div>
+      <div className="w-full max-w-md bg-white/70 backdrop-blur-xl rounded-3xl p-8 shadow-xl">
+
+        <h2 className="text-3xl font-extrabold text-center mb-2">
+          Create Account 🩺
+        </h2>
+        <p className="text-center text-gray-500 mb-8">
+          Book appointments and track your health
+        </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Name */}
           <div>
-            <label className="text-sm text-gray-600">Full Name</label>
             <input
-              type="text"
-              name="name"
-              required
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
-              placeholder="Patient Name"
+              placeholder="Full Name"
+              onChange={(e) =>
+                setForm({ ...form, name: e.target.value })
+              }
+              className={`w-full px-4 py-3 rounded-xl border ${
+                errors.name ? "border-red-400" : "border-gray-200"
+              }`}
             />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            )}
           </div>
 
+          {/* Email */}
           <div>
-            <label className="text-sm text-gray-600">Email</label>
             <input
-              type="email"
-              name="email"
-              required
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
-              placeholder="patient@email.com"
+              placeholder="Email"
+              onChange={(e) =>
+                setForm({ ...form, email: e.target.value })
+              }
+              className={`w-full px-4 py-3 rounded-xl border ${
+                errors.email ? "border-red-400" : "border-gray-200"
+              }`}
             />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
 
+          {/* Password */}
           <div>
-            <label className="text-sm text-gray-600">Password</label>
-            <input
-              type="password"
-              name="password"
-              required
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                onChange={(e) =>
+                  setForm({ ...form, password: e.target.value })
+                }
+                className={`w-full px-4 py-3 rounded-xl border ${
+                  errors.password ? "border-red-400" : "border-gray-200"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold flex justify-center"
           >
-            Sign Up
+            {loading ? (
+              <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
 
