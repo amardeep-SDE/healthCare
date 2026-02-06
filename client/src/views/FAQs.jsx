@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { FiPlus, FiMinus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 
 const faqs = [
   { key: "q1" },
@@ -21,74 +21,89 @@ const FAQs = () => {
   return (
     <section
       id="faqs"
-      className="relative bg-gradient-to-b from-white via-blue-50 to-green-50 
-                 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 
-                 py-20 px-6 sm:px-10 md:px-24"
+      className="relative overflow-hidden py-20 px-4 sm:px-8 md:px-20 
+                 bg-[radial-gradient(circle_at_top,_#eef2ff,_#ffffff_65%)]
+                 dark:bg-[radial-gradient(circle_at_top,_#020617,_#020617_65%)]"
     >
-      <div className="max-w-5xl mx-auto">
+      {/* subtle glow */}
+      <div className="pointer-events-none absolute -top-32 -left-32 w-72 h-72 bg-indigo-400/20 blur-3xl rounded-full" />
+      <div className="pointer-events-none absolute top-1/2 -right-32 w-72 h-72 bg-cyan-400/20 blur-3xl rounded-full" />
+
+      <div className="relative max-w-5xl mx-auto">
         {/* Heading */}
         <motion.h2
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-4xl sm:text-5xl font-extrabold text-center 
-                     text-gray-800 dark:text-white mb-6"
+          transition={{ duration: 0.6 }}
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center 
+                     text-gray-900 dark:text-white"
         >
           {t("faq.title")}
         </motion.h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 mx-auto mb-12 rounded-full"></div>
 
-        {/* FAQs */}
-        <div className="space-y-6">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={faq.key}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md 
-                         rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 
-                         hover:shadow-2xl transition-all duration-300"
-            >
-              {/* Question Button */}
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center px-6 py-5 
-                           text-left text-lg sm:text-xl font-semibold 
-                           text-gray-800 dark:text-gray-100 
-                           hover:bg-gray-50 dark:hover:bg-gray-700/40 transition"
+        <p className="mt-3 text-center text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Clear answers to common questions about treatment, appointments, and care.
+        </p>
+
+        <div className="mt-14 space-y-5">
+          {faqs.map((faq, index) => {
+            const isOpen = activeIndex === index;
+
+            return (
+              <motion.div
+                key={faq.key}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+                className={`group rounded-3xl border backdrop-blur-xl transition-all
+                  ${
+                    isOpen
+                      ? "bg-white/80 dark:bg-gray-900/80 border-indigo-300 dark:border-indigo-500 shadow-[0_20px_60px_rgba(79,70,229,0.15)]"
+                      : "bg-white/60 dark:bg-gray-900/60 border-white/40 dark:border-gray-700 hover:shadow-lg"
+                  }`}
               >
-                <span>{t(`faq.${faq.key}.question`)}</span>
-                <motion.div
-                  animate={{ rotate: activeIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
+                {/* Question */}
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full flex items-center justify-between gap-6 px-6 py-6 text-left"
                 >
-                  {activeIndex === index ? (
-                    <FiMinus className="text-2xl text-indigo-600 dark:text-cyan-400" />
-                  ) : (
-                    <FiPlus className="text-2xl text-indigo-600 dark:text-cyan-400" />
-                  )}
-                </motion.div>
-              </button>
+                  <span className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
+                    {t(`faq.${faq.key}.question`)}
+                  </span>
 
-              {/* Answer */}
-              <AnimatePresence>
-                {activeIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="px-6 pb-5 text-gray-600 dark:text-gray-300 text-base leading-relaxed"
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.25 }}
+                    className={`flex items-center justify-center w-9 h-9 rounded-full 
+                      ${
+                        isOpen
+                          ? "bg-indigo-600 text-white"
+                          : "bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400"
+                      }`}
                   >
-                    {t(`faq.${faq.key}.answer`)}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                    <FiPlus className="text-lg" />
+                  </motion.span>
+                </button>
+
+                {/* Answer */}
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
+                      className="px-6 pb-6 text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed"
+                    >
+                      {t(`faq.${faq.key}.answer`)}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
