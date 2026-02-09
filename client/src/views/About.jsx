@@ -6,13 +6,19 @@ import { useTranslation } from "react-i18next";
 const AboutSection = () => {
   const { t } = useTranslation();
 
-  const icons = [<FiUserCheck size={24} />, <FiHeart size={24} />, <FiHeart size={24} />, <FiUserCheck size={24} />];
+  const icons = [
+    <FiUserCheck size={22} />,
+    <FiHeart size={22} />,
+    <FiHeart size={22} />,
+    <FiUserCheck size={22} />,
+  ];
 
+  // Medical related images
   const images = [
-    "https://images.pexels.com/photos/8376170/pexels-photo-8376170.jpeg?auto=compress&cs=tinysrgb&w=640",
-    "https://images.pexels.com/photos/6749771/pexels-photo-6749771.jpeg?auto=compress&cs=tinysrgb&w=640",
-    "https://images.pexels.com/photos/8460151/pexels-photo-8460151.jpeg?auto=compress&cs=tinysrgb&w=640",
-    "https://images.pexels.com/photos/8376192/pexels-photo-8376192.jpeg?auto=compress&cs=tinysrgb&w=640",
+    "https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=800", // Doctor consultation
+    "https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=800", // Patient care
+    "https://images.pexels.com/photos/3845766/pexels-photo-3845766.jpeg?auto=compress&cs=tinysrgb&w=800", // Medical team
+    "https://images.pexels.com/photos/305565/pexels-photo-305565.jpeg?auto=compress&cs=tinysrgb&w=800", // Clinic interior
   ];
 
   const cards = t("about.cards", { returnObjects: true });
@@ -20,16 +26,16 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white py-20 pt-40 px-6 sm:px-10 md:px-24"
+      className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white py-24 px-6 sm:px-10 md:px-24"
     >
       <div className="max-w-7xl mx-auto text-center">
-        {/* Title & Description */}
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="bg-white/60 dark:bg-white/5 backdrop-blur-md p-6 rounded-xl  dark:border-gray-800 max-w-3xl mx-auto mb-12"
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="bg-white/70 dark:bg-white/5 backdrop-blur-md p-8 rounded-2xl max-w-3xl mx-auto mb-16 shadow-lg"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             {t("about.name")}{" "}
@@ -44,34 +50,46 @@ const AboutSection = () => {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {cards.map((card, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.2 }}
-              className="group relative rounded-2xl overflow-hidden shadow-lg backdrop-blur-md bg-white/60 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 hover:shadow-2xl transition duration-500"
+              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              className="group rounded-2xl overflow-hidden bg-white/80 dark:bg-slate-800/70 
+              border border-gray-200 dark:border-slate-700 
+              shadow-md hover:shadow-2xl 
+              transition-all duration-500 hover:-translate-y-2"
             >
               {/* Image */}
-              <div className="relative h-40 overflow-hidden">
+              <div className="relative h-44 overflow-hidden">
                 <img
                   src={images[idx]}
                   alt={card.title}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                 />
-                <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-white dark:bg-slate-900 p-3 rounded-full border border-indigo-300 dark:border-indigo-600 shadow-md z-10">
-                  <span className="text-indigo-600 dark:text-indigo-400">{icons[idx]}</span>
+
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+
+                {/* Icon */}
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 
+                p-4 rounded-full border border-indigo-300 dark:border-indigo-600 
+                shadow-lg group-hover:scale-110 transition">
+                  <span className="text-indigo-600 dark:text-indigo-400">
+                    {icons[idx]}
+                  </span>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="pt-10 pb-6 px-5 text-center space-y-2">
-                <h3 className="text-lg font-bold text-gray-800 dark:text-white group-hover:text-indigo-600 transition">
+              <div className="pt-12 pb-6 px-6 text-center space-y-3">
+                <h3 className="text-lg font-semibold tracking-wide text-gray-800 dark:text-white group-hover:text-indigo-600 transition">
                   {card.title}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                   {card.desc}
                 </p>
               </div>
