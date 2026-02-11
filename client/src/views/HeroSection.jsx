@@ -9,12 +9,13 @@ import { useTranslation } from "react-i18next";
 const HeroSection = () => {
   const { t, i18n } = useTranslation();
 
-  const images = [
-    "https://images.pexels.com/photos/8376170/pexels-photo-8376170.jpeg?auto=compress&cs=tinysrgb&w=640",
-    "https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=640",
-    "https://images.pexels.com/photos/6749771/pexels-photo-6749771.jpeg?auto=compress&cs=tinysrgb&w=640",
-    "https://images.pexels.com/photos/8460151/pexels-photo-8460151.jpeg?auto=compress&cs=tinysrgb&w=640",
-  ];
+ const images = [
+  "https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=800", // Doctor consulting laptop
+  "https://images.pexels.com/photos/7088530/pexels-photo-7088530.jpeg?auto=compress&cs=tinysrgb&w=800", // Doctor writing prescription
+  "https://images.pexels.com/photos/7089020/pexels-photo-7089020.jpeg?auto=compress&cs=tinysrgb&w=800", // Checking blood pressure
+  "https://images.pexels.com/photos/7088524/pexels-photo-7088524.jpeg?auto=compress&cs=tinysrgb&w=800", // Clinic interaction
+];
+
 
   return (
     <section
