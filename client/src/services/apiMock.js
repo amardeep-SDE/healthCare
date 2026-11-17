@@ -4,10 +4,12 @@ import {
   INITIAL_PRESCRIPTIONS,
   INITIAL_PATIENT_TRACING,
   MEDICINE_STORE_ITEMS,
+  ALL_PATIENTS_DIRECTORY,
+  INITIAL_ORDERS,
 } from "../data/homeopathyData";
 
 // Helper to simulate network delay for TanStack Query
-const delay = (ms = 400) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms = 350) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Local in-memory / storage sync
 const getStoredData = (key, fallback) => {
@@ -29,12 +31,12 @@ const setStoredData = (key, data) => {
 export const api = {
   // Appointments
   async fetchAppointments() {
-    await delay(300);
+    await delay(250);
     return getStoredData("hp_appointments_api", INITIAL_APPOINTMENTS);
   },
 
   async bookAppointment(newApp) {
-    await delay(400);
+    await delay(350);
     const existing = getStoredData("hp_appointments_api", INITIAL_APPOINTMENTS);
     const created = {
       id: `DRR-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -53,7 +55,7 @@ export const api = {
   },
 
   async updateAppointmentStatus({ id, status }) {
-    await delay(250);
+    await delay(200);
     const existing = getStoredData("hp_appointments_api", INITIAL_APPOINTMENTS);
     const updated = existing.map((app) =>
       app.id === id ? { ...app, status } : app
@@ -64,12 +66,12 @@ export const api = {
 
   // Prescriptions
   async fetchPrescriptions() {
-    await delay(300);
+    await delay(250);
     return getStoredData("hp_prescriptions_api", INITIAL_PRESCRIPTIONS);
   },
 
   async addPrescription(prescription) {
-    await delay(400);
+    await delay(350);
     const existing = getStoredData("hp_prescriptions_api", INITIAL_PRESCRIPTIONS);
     const created = {
       id: `RX-${new Date().getFullYear()}-${Math.floor(100 + Math.random() * 900)}`,
@@ -94,12 +96,12 @@ export const api = {
 
   // Patient Health Tracing
   async fetchPatientTracing() {
-    await delay(300);
+    await delay(250);
     return getStoredData("hp_patient_tracing_api", INITIAL_PATIENT_TRACING);
   },
 
   async updateSymptomSeverity({ index, severity }) {
-    await delay(300);
+    await delay(250);
     const tracing = getStoredData("hp_patient_tracing_api", INITIAL_PATIENT_TRACING);
     const updatedSymptoms = [...tracing.symptomTracker];
     updatedSymptoms[index].currentSeverity = severity;
@@ -119,8 +121,37 @@ export const api = {
 
   // Medicines Catalog
   async fetchMedicines() {
-    await delay(300);
+    await delay(250);
     return MEDICINE_STORE_ITEMS;
   },
-};
 
+  // Patients Directory (For Dr. Rashi's EMR / 1000+ Patient Management)
+  async fetchPatientsDirectory() {
+    await delay(300);
+    return getStoredData("hp_patients_directory_api", ALL_PATIENTS_DIRECTORY);
+  },
+
+  async updatePatientNote({ id, doctorNote }) {
+    await delay(250);
+    const patients = getStoredData("hp_patients_directory_api", ALL_PATIENTS_DIRECTORY);
+    const updated = patients.map((p) =>
+      p.id === id ? { ...p, doctorNotes: doctorNote } : p
+    );
+    setStoredData("hp_patients_directory_api", updated);
+    return { id, doctorNote };
+  },
+
+  // Doctor Super Admin Dispensary Orders
+  async fetchDoctorOrders() {
+    await delay(250);
+    return getStoredData("hp_orders", INITIAL_ORDERS);
+  },
+
+  async updateOrderStatus({ id, status }) {
+    await delay(200);
+    const orders = getStoredData("hp_orders", INITIAL_ORDERS);
+    const updated = orders.map((o) => (o.id === id ? { ...o, status } : o));
+    setStoredData("hp_orders", updated);
+    return { id, status };
+  },
+};

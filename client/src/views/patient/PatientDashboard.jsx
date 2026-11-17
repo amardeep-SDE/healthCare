@@ -61,6 +61,12 @@ export const PatientDashboard = () => {
 
                         <div className="flex flex-wrap items-center gap-3">
                           <Link
+                            to="/patient/profile"
+                            className="px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/30 transition hover:scale-105"
+                          >
+                            My Health Profile
+                          </Link>
+                          <Link
                             to="/appointment"
                             className="px-5 py-2.5 rounded-full bg-white text-indigo-700 hover:bg-indigo-50 text-xs sm:text-sm font-bold shadow-md transition hover:scale-105"
                           >

@@ -176,10 +176,22 @@ export const DoctorDashboard = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to="/doctor/patients"
+                className="px-5 py-2.5 rounded-full bg-white text-indigo-900 hover:bg-indigo-50 font-bold text-xs sm:text-sm shadow-md transition hover:scale-105 flex items-center gap-1.5"
+              >
+                <FiUsers /> Patients Directory (EMR)
+              </Link>
+              <Link
+                to="/doctor/orders"
+                className="px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-semibold text-xs sm:text-sm border border-white/30 transition flex items-center gap-1.5"
+              >
+                <FaPills /> Dispensary Orders
+              </Link>
               <span className="px-4 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                Clinic Accepting Patients
+                Clinic Live
               </span>
             </div>
           </div>

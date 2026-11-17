@@ -8,6 +8,8 @@ export const QUERY_KEYS = {
   PRESCRIPTIONS: ["prescriptions"],
   PATIENT_TRACING: ["patient_tracing"],
   MEDICINES: ["medicines"],
+  PATIENTS_DIRECTORY: ["patients_directory"],
+  DOCTOR_ORDERS: ["doctor_orders"],
 };
 
 // 1. Appointments Query
@@ -103,3 +105,44 @@ export const useMedicinesQuery = () => {
   });
 };
 
+// 9. Patients Directory Query (1000+ Patient Management for Dr. Rashi)
+export const usePatientsDirectoryQuery = () => {
+  return useQuery({
+    queryKey: QUERY_KEYS.PATIENTS_DIRECTORY,
+    queryFn: api.fetchPatientsDirectory,
+  });
+};
+
+// 10. Update Patient Clinical Note
+export const useUpdatePatientNoteMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: api.updatePatientNote,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PATIENTS_DIRECTORY });
+      toast.success("Clinical note updated in patient's file");
+    },
+  });
+};
+
+// 11. Doctor Orders Query
+export const useDoctorOrdersQuery = () => {
+  return useQuery({
+    queryKey: QUERY_KEYS.DOCTOR_ORDERS,
+    queryFn: api.fetchDoctorOrders,
+  });
+};
+
+// 12. Doctor Update Order Status
+export const useUpdateOrderStatusMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: api.updateOrderStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.DOCTOR_ORDERS });
+      toast.success("Order status updated successfully!");
+    },
+  });
+};

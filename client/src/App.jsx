@@ -13,8 +13,11 @@ const AppointmentBooking = lazy(() => import("./views/appointment/AppointmentBoo
 const PatientDashboard = lazy(() => import("./views/patient/PatientDashboard"));
 const MyAppointments = lazy(() => import("./views/patient/MyAppointments"));
 const DoctorDashboard = lazy(() => import("./views/doctor/DoctorDashboard"));
+const DoctorPatientsDirectory = lazy(() => import("./views/doctor/DoctorPatientsDirectory"));
+const DoctorOrdersManagement = lazy(() => import("./views/doctor/DoctorOrdersManagement"));
 const MedicineStore = lazy(() => import("./views/medicine/MedicineStore"));
 const OrderTracking = lazy(() => import("./views/medicine/OrderTracking"));
+const PatientProfile = lazy(() => import("./views/patient/PatientProfile"));
 const Login = lazy(() => import("./views/auth/Login"));
 const Register = lazy(() => import("./views/auth/Register"));
 
@@ -63,11 +66,27 @@ const appRouter = createBrowserRouter([
           </Suspense >
         ),
 },
-{
-      path: "/doctor/dashboard",
+      {
+        path: "/doctor/dashboard",
         element: (
           <Suspense fallback={<PageLoader />}>
             <DoctorDashboard />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/doctor/patients",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <DoctorPatientsDirectory />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/doctor/orders",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <DoctorOrdersManagement />
           </Suspense>
         ),
       },
@@ -79,13 +98,29 @@ const appRouter = createBrowserRouter([
       </Suspense>
     ),
       },
-{
-  path: "/orders",
-    element: (
-      <Suspense fallback={<PageLoader />}>
-        <OrderTracking />
-      </Suspense>
-    ),
+      {
+        path: "/orders",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <OrderTracking />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/patient/profile",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <PatientProfile />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <PatientProfile />
+          </Suspense>
+        ),
       },
 {
   path: "/login",

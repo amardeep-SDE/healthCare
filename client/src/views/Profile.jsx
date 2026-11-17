@@ -1,9 +1,4 @@
-import React from 'react'
+// src/views/Profile.jsx
+import PatientProfile from "./patient/PatientProfile";
 
-const Profile = () => {
-  return (
-    <div>Profile</div>
-  )
-}
-
-export default Profile
+export default PatientProfile;
