@@ -250,21 +250,22 @@ export const AppointmentBooking = () => {
             </div>
 
             {mode.includes("Online") && (
-              <div className="mt-6 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 max-w-md mx-auto text-left">
-                <p className="text-xs font-semibold text-blue-900 dark:text-blue-300 flex items-center gap-1.5">
-                  <FiVideo /> Online Video Consultation Link:
-                </p>
-                <a
-                  href="https://meet.google.com/hpc-demo-call"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm font-mono text-indigo-600 dark:text-indigo-400 underline break-all block mt-1"
+              <div className="mt-6 p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 max-w-md mx-auto text-left flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
+                    <FiVideo className="text-indigo-600 text-sm" /> Tele-Consultation Room Ready
+                  </p>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
+                    Dr. Rashi will be available in the in-app room at your slot.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/consultation/${confirmedBooking?.id || "DRR-101"}`)}
+                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow transition hover:scale-105 whitespace-nowrap"
                 >
-                  https://meet.google.com/hpc-demo-call
-                </a>
-                <p className="text-[11px] text-blue-700 dark:text-blue-400 mt-1">
-                  Dr. Rashi will be online at your selected slot. Please join 2 mins early.
-                </p>
+                  Enter Room
+                </button>
               </div>
             )}
 

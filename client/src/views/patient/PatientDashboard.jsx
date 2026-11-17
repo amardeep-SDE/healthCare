@@ -184,14 +184,12 @@ export const PatientDashboard = () => {
                               </div>
 
                               {nextAppointment.mode.includes("Online") && (
-                                <a
-                                  href={nextAppointment.meetingLink || "https://meet.google.com/hpc-demo-call"}
-                                  target="_blank"
-                                  rel="noreferrer"
+                                <Link
+                                  to={`/consultation/${nextAppointment.id}`}
                                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-600/20 transition hover:scale-105"
                                 >
-                                  <FiVideo /> Join Video Call
-                                </a>
+                                  <FiVideo /> Enter Video Room
+                                </Link>
                               )}
                             </div>
                           </div>

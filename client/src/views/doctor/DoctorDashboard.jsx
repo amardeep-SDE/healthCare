@@ -67,14 +67,12 @@ const PatientQueueRow = memo(({ app, onOpenPrescription, onStatusChange }) => {
 
         <div className="flex items-center gap-2">
           {app.mode.includes("Online") && (
-            <a
-              href={app.meetingLink || "https://meet.google.com/hpc-demo-call"}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to={`/consultation/${app.id}`}
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition hover:scale-105"
             >
-              <FiVideo /> Start Call
-            </a>
+              <FiVideo /> Enter Video Room
+            </Link>
           )}
 
           <button

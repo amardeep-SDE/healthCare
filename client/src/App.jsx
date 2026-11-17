@@ -18,6 +18,7 @@ const DoctorOrdersManagement = lazy(() => import("./views/doctor/DoctorOrdersMan
 const MedicineStore = lazy(() => import("./views/medicine/MedicineStore"));
 const OrderTracking = lazy(() => import("./views/medicine/OrderTracking"));
 const PatientProfile = lazy(() => import("./views/patient/PatientProfile"));
+const ConsultationRoom = lazy(() => import("./views/consultation/ConsultationRoom"));
 const Login = lazy(() => import("./views/auth/Login"));
 const Register = lazy(() => import("./views/auth/Register"));
 
@@ -58,14 +59,22 @@ const appRouter = createBrowserRouter([
           </Suspense >
         ),
       },
-{
-  path: "/my-appointments",
-    element: (
-        <Suspense fallback={<PageLoader />}>
-          <MyAppointments />
-          </Suspense >
+      {
+        path: "/my-appointments",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <MyAppointments />
+          </Suspense>
         ),
-},
+      },
+      {
+        path: "/consultation/:id",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ConsultationRoom />
+          </Suspense>
+        ),
+      },
       {
         path: "/doctor/dashboard",
         element: (
