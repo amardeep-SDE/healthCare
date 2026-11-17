@@ -53,7 +53,7 @@ const Header = () => {
     >
       <header className="flex items-center justify-between px-4 sm:px-8 max-w-7xl mx-auto w-full">
         {/* Logo */}
-        <Link to={isDoc ? "/doctor/dashboard" : "/"} className="flex items-center gap-2.5">
+        <Link to="/" className="flex items-center gap-2.5">
           <img
             src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
             alt="Dr. Rashi Homeopathy"
@@ -74,6 +74,9 @@ const Header = () => {
           {isDoc ? (
             /* DOCTOR (SUPER ADMIN) NAVIGATION */
             <>
+              <Link to="/" className={navLinkClasses("/")}>
+                {t("nav.home") || "Home"}
+              </Link>
               <Link to="/doctor/dashboard" className={navLinkClasses("/doctor/dashboard")}>
                 <span className="flex items-center gap-1.5">
                   <FaUserMd className="text-indigo-600" /> Clinic Control
@@ -88,15 +91,6 @@ const Header = () => {
                 <span className="flex items-center gap-1.5">
                   <FaPills className="text-indigo-600" /> Dispensary & Orders
                 </span>
-              </Link>
-              <Link
-                to="/"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 hover:text-indigo-600 transition"
-                title="Preview public clinic portal as visitor"
-              >
-                <FiEye /> Preview Website
               </Link>
             </>
           ) : (
@@ -242,6 +236,9 @@ const Header = () => {
           <div className="flex flex-col space-y-4 text-base font-semibold">
             {isDoc ? (
               <>
+                <Link to="/" onClick={() => setIsMenuOpen(false)}>
+                  Home (Clinic Portal)
+                </Link>
                 <Link to="/doctor/dashboard" onClick={() => setIsMenuOpen(false)}>
                   Clinic Control
                 </Link>
@@ -250,9 +247,6 @@ const Header = () => {
                 </Link>
                 <Link to="/doctor/orders" onClick={() => setIsMenuOpen(false)}>
                   Dispensary & Orders
-                </Link>
-                <Link to="/" onClick={() => setIsMenuOpen(false)}>
-                  Preview Website
                 </Link>
               </>
             ) : (
