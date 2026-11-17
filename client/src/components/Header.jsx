@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
-import ThemeToggle from "../components/ThemeToggle ";
+import ThemeToggle from "../components/ThemeToggle";
 import { useTranslation } from "react-i18next";
 
 const Header = () => {
@@ -14,10 +14,9 @@ const Header = () => {
   const location = useLocation();
 
   const navLinkClasses = (section) =>
-    `cursor-pointer pb-1 transition-all border-b-2 ${
-      activeSection === section
-        ? "text-indigo-600 dark:text-indigo-400 border-indigo-600 dark:border-indigo-400"
-        : "text-gray-900 dark:text-white border-transparent hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-600 dark:hover:border-indigo-400"
+    `cursor-pointer pb-1 transition-all border-b-2 ${activeSection === section
+      ? "text-indigo-600 dark:text-indigo-400 border-indigo-600 dark:border-indigo-400"
+      : "text-gray-900 dark:text-white border-transparent hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-600 dark:hover:border-indigo-400"
     }`;
 
   useEffect(() => {
@@ -40,11 +39,10 @@ const Header = () => {
 
   return (
     <section
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
           ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur shadow-md"
           : "bg-gradient-to-b from-blue-100 via-purple-100 to-purple-200 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900"
-      }`}
+        }`}
     >
       <header className="flex items-center justify-between px-6 sm:px-10 py-6 max-w-7xl mx-auto w-full">
         {/* Logo */}
