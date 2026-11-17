@@ -1,9 +1,4 @@
-import React from 'react'
+// src/views/DoctorDashboard.jsx
+import DoctorDashboard from "./doctor/DoctorDashboard";
 
-const DoctorDashboard = () => {
-  return (
-    <div>DoctorDashboard</div>
-  )
-}
-
-export default DoctorDashboard
+export default DoctorDashboard;

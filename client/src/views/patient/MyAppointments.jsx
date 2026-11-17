@@ -1,136 +1,232 @@
-import React, { useState } from "react";
+// src/views/patient/MyAppointments.jsx
+import React, { useState, useMemo, useCallback, memo } from "react";
+import { Link } from "react-router-dom";
 import {
-  FaCalendarAlt,
-  FaClock,
-  FaMoneyBillWave,
-  FaUserMd,
-} from "react-icons/fa";
-import toast from "react-hot-toast";
+FiCalendar,
+  FiClock,
+  FiVideo,
+  FiMapPin,
+  FiCheckCircle,
+  FiXCircle,
+  FiSearch,
+  FiPlusCircle,
+} from "react-icons/fi";
+import { FaUserMd, FaHospitalUser } from "react-icons/fa";
+import { useAppointmentsQuery, useUpdateAppointmentMutation } from "../../hooks/useAppointmentsQuery";
+import { useDebounce } from "../../hooks/useDebounce";
+import { Badge } from "../../components/common/Badge";
+import { formatCurrency } from "../../utils/formatters";
 
-const MyAppointments = () => {
-  const [appointments, setAppointments] = useState([
-    {
-      id: "1",
-      date: "2025-07-10",
-      time: "11:30 AM",
-      doctor: "Dr. Rashi Shrivastava",
-      specialization: "Homeopathic Consultant",
-      fee: 500,
-      status: "Pending",
-      image: "https://cdn-icons-png.flaticon.com/512/3774/3774299.png",
-    },
-    {
-      id: "2",
-      date: "2025-07-12",
-      time: "2:00 PM",
-      doctor: "Dr. Rashi Shrivastava",
-      specialization: "Homeopathic Consultant",
-      fee: 500,
-      status: "Paid",
-      image: "https://cdn-icons-png.flaticon.com/512/3774/3774299.png",
-    },
-  ]);
-
-  const handlePayment = (id) => {
-    setAppointments((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, status: "Paid" } : a))
-    );
-    toast.success("Payment successful. Appointment confirmed.");
-  };
-
-  const handleCancel = (id) => {
-    setAppointments((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, status: "Cancelled" } : a))
-    );
-    toast("Appointment cancelled", { icon: "⚠️" });
-  };
-
-  return (
-    <section className="relative overflow-hidden px-4 sm:px-6 md:px-14 py-12 bg-[radial-gradient(circle_at_top,_#eef2ff,_#ffffff_70%)] dark:bg-[radial-gradient(circle_at_top,_#111827,_#020617_70%)]">
-      
-      {/* soft glow */}
-      <div className="pointer-events-none absolute top-0 left-0 w-64 h-64 -translate-x-1/2 -translate-y-1/2 bg-indigo-400/20 blur-3xl rounded-full" />
-      <div className="pointer-events-none absolute bottom-0 right-0 w-64 h-64 translate-x-1/2 translate-y-1/2 bg-cyan-400/20 blur-3xl rounded-full" />
-
-      <h2 className="relative text-3xl sm:text-4xl font-extrabold text-center mb-12 text-gray-900 dark:text-white">
-        My Appointments
-      </h2>
-
-      {appointments.length === 0 ? (
-        <p className="text-center text-gray-600 dark:text-gray-300">
-          No appointments booked yet.
-        </p>
-      ) : (
-        <div className="relative max-w-6xl mx-auto grid gap-8 md:grid-cols-2">
-          {appointments.map((appt) => (
-            <div
-              key={appt.id}
-              className="group relative bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-white/40 dark:border-gray-700 rounded-3xl p-6 sm:p-7 shadow-[0_10px_40px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-all"
-            >
-              {/* status badge */}
-              <span
-                className={`absolute top-4 right-4 text-xs font-semibold px-3 py-1 rounded-full ${
-                  appt.status === "Paid"
-                    ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
-                    : appt.status === "Pending"
-                    ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300"
-                    : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
-                }`}
-              >
-                {appt.status}
-              </span>
-
-              <div className="flex flex-col sm:flex-row items-center gap-5">
-                <img
-                  src={appt.image}
-                  alt={appt.doctor}
-                  className="w-24 h-24 rounded-2xl bg-indigo-50 dark:bg-gray-800 p-3 shadow-md group-hover:scale-105 transition"
-                />
-
-                <div className="flex-1 text-center sm:text-left">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center justify-center sm:justify-start gap-2">
-                    <FaUserMd className="text-indigo-600" />
-                    {appt.doctor}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {appt.specialization}
-                  </p>
-
-                  <div className="mt-3 flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <span className="flex items-center gap-1 text-xs bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full">
-                      <FaCalendarAlt /> {appt.date}
+      // Memoized Appointment Card for rendering optimization
+      const AppointmentCard = memo(({ app, onCancel }) => {
+        return (
+          <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-7 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-700">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xl font-bold">
+                  {app.mode.includes("Online") ? <FiVideo /> : <FaHospitalUser />}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-bold text-gray-500 dark:text-gray-400">
+                      {app.id}
                     </span>
-                    <span className="flex items-center gap-1 text-xs bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 px-3 py-1 rounded-full">
-                      <FaClock /> {appt.time}
-                    </span>
-                    <span className="flex items-center gap-1 text-xs bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 rounded-full">
-                      <FaMoneyBillWave /> ₹{appt.fee}
-                    </span>
+                    <Badge status={app.status} />
                   </div>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mt-0.5">
+                    {app.concern || "Consultation with Dr. Rashi"}
+                  </h3>
                 </div>
               </div>
 
-              {appt.status === "Pending" && (
-                <div className="mt-6 flex gap-3 justify-center sm:justify-end">
-                  <button
-                    onClick={() => handlePayment(appt.id)}
-                    className="px-6 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-blue-600 shadow-md hover:scale-105 transition"
+              <div className="text-left sm:text-right">
+                <span className="text-xs text-gray-500 dark:text-gray-400 block">Consultation Fee</span>
+                <span className="text-base font-extrabold text-indigo-600 dark:text-indigo-400">
+                  {formatCurrency(app.fee || 500)}
+                </span>
+                <span className="text-[11px] text-emerald-600 font-medium block">
+                  {app.paymentStatus === "Paid" ? "✓ Paid Online" : "Payment Pending"}
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+              <div className="flex items-center gap-2">
+                <FiCalendar className="text-indigo-600 flex-shrink-0" />
+                <span>Date: <strong>{app.date}</strong></span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FiClock className="text-indigo-600 flex-shrink-0" />
+                <span>Slot: <strong>{app.timeSlot || "11:30 AM"}</strong></span>
+              </div>
+              <div className="flex items-center gap-2">
+                {app.mode.includes("Online") ? (
+                  <FiVideo className="text-blue-600 flex-shrink-0" />
+                ) : (
+                  <FiMapPin className="text-emerald-600 flex-shrink-0" />
+                )}
+                <span>Mode: <strong>{app.mode}</strong></span>
+              </div>
+            </div>
+
+            {app.symptoms && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/40 p-3 rounded-xl mb-4">
+                <strong className="text-gray-700 dark:text-gray-300">Symptoms noted:</strong> {app.symptoms}
+              </p>
+            )}
+
+            {/* Action Footer */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+              <div className="text-xs text-gray-400">
+                Doctor: <strong>Dr. Rashi Shrivastava (BHMS)</strong>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {app.mode.includes("Online") && app.status !== "Cancelled" && (
+                  <a
+                    href={app.meetingLink || "https://meet.google.com/hpc-demo-call"}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition hover:scale-105"
                   >
-                    Pay Now
-                  </button>
+                    <FiVideo /> Join Video Call
+                  </a>
+                )}
+
+                {app.status === "Confirmed" && (
                   <button
-                    onClick={() => handleCancel(appt.id)}
-                    className="px-6 py-2 rounded-full text-sm font-semibold text-red-500 border border-red-300 dark:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/40 transition"
+                    onClick={() => onCancel(app.id)}
+                    className="px-3.5 py-2 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 text-xs font-medium text-gray-600 dark:text-gray-400 transition"
                   >
                     Cancel
                   </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          ))}
+          </div>
+        );
+      });
+      AppointmentCard.displayName = "AppointmentCard";
+
+      export const MyAppointments = () => {
+        const { data: appointments = [], isLoading } = useAppointmentsQuery();
+        const updateMutation = useUpdateAppointmentMutation();
+
+        const [activeFilter, setActiveFilter] = useState("All");
+        const [searchQuery, setSearchQuery] = useState("");
+        const debouncedSearch = useDebounce(searchQuery, 300);
+
+        // Cancellation callback with useCallback
+        const handleCancel = useCallback(
+          (id) => {
+            if (window.confirm("Are you sure you want to cancel this appointment?")) {
+              updateMutation.mutate({ id, status: "Cancelled" });
+            }
+          },
+  [updateMutation]
+  );
+
+// Memoized Filtered List
+const filteredAppointments = useMemo(() => {
+  return appointments.filter((app) => {
+    const matchesFilter =
+      activeFilter === "All" ||
+      app.status?.toLowerCase() === activeFilter.toLowerCase();
+
+    const matchesSearch =
+      !debouncedSearch ||
+      app.concern?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      app.id?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      app.patientName?.toLowerCase().includes(debouncedSearch.toLowerCase());
+
+    return matchesFilter && matchesSearch;
+  });
+}, [appointments, activeFilter, debouncedSearch]);
+
+return (
+    <div className="min-h-screen bg-gray-50/60 dark:bg-gray-950 py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-6">
+        {/* Top Header */}
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">
+              My Consultations & Appointments
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+              Track your scheduled visits, join online video sessions, and manage your bookings.
+            </p>
+          </div>
+
+          <Link
+            to="/appointment"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-600/30 transition hover:scale-105"
+          >
+            <FiPlusCircle /> Book New Consultation
+          </Link>
         </div>
-      )}
-    </section>
+
+        {/* Filter Tabs & Search Bar */}
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col sm:flex-row gap-4 justify-between items-center">
+                  <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto">
+                    {["All", "Confirmed", "Pending", "Cancelled"].map((tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveFilter(tab)}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition ${activeFilter === tab
+                            ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
+                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          }`}
+                      >
+                { tab }
+              </button>
+            ))}
+                </div>
+
+                  <div className="relative w-full sm:w-64">
+                    <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+                    <input
+                      type="text"
+                      placeholder="Search appointments..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs bg-gray-50 dark:bg-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                  </div>
+                </div>
+
+        {/* Appointments List */ }
+        {
+                isLoading?(
+          <div className = "min-h-[250px] flex items-center justify-center" >
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+          </div>
+        ) : filteredAppointments.length === 0 ? (
+        <div className="bg-white dark:bg-gray-800 rounded-3xl p-12 text-center border border-gray-100 dark:border-gray-700">
+          <div className="w-16 h-16 bg-indigo-50 dark:bg-gray-700 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-2xl mx-auto mb-4">
+            <FiCalendar />
+          </div>
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+        No Appointments Found
+      </h3>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-sm mx-auto">
+        You do not have any appointments matching this filter. Schedule a new consultation with Dr. Rashi.
+      </p>
+      <Link
+        to="/appointment"
+        className="inline-block mt-5 px-6 py-2.5 rounded-full bg-indigo-600 text-white text-xs font-semibold"
+      >
+        Book Now
+      </Link>
+    </div>
+    ) : (
+    <div className="space-y-4">
+      {filteredAppointments.map((app) => (
+        <AppointmentCard key={app.id} app={app} onCancel={handleCancel} />
+      ))}
+    </div>
+        )}
+  </div>
+    </div >
   );
 };
 
