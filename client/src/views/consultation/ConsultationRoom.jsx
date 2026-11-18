@@ -24,6 +24,8 @@ import { FaUserMd, FaPills, FaHeartbeat } from "react-icons/fa";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useAppointmentsQuery } from "../../hooks/useAppointmentsQuery";
 import { PrescriptionPadModal } from "../doctor/PrescriptionPadModal";
+import { socket, connectSocket, disconnectSocket } from "../../services/socket";
+import { api } from "../../services/api";
 import toast from "react-hot-toast";
 
 // Memoized Chat Bubble
@@ -124,22 +126,78 @@ export const ConsultationRoom = () => {
     chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isChatOpen]);
 
+  // Real-time Socket Connection & In-Call Chat Synchronization
+  useEffect(() => {
+    const s = connectSocket();
+    const currentRoom = appointment.id || "DRR-101";
+
+    s.emit("join_room", {
+      room: currentRoom,
+      user: {
+        name: user?.name || (isDoc ? "Dr. Rashi Shrivastava" : "Ananya Sharma"),
+        role: user?.role || (isDoc ? "doctor" : "patient"),
+      },
+    });
+
+    // Fetch initial chat messages from backend if available
+    api.fetchChatMessages(currentRoom).then((backendMsgs) => {
+      if (Array.isArray(backendMsgs) && backendMsgs.length > 0) {
+        setMessages((prev) => {
+          const combined = [...backendMsgs];
+          return combined;
+        });
+      }
+    });
+
+    s.on("receive_message", (incomingMsg) => {
+      setMessages((prev) => {
+        if (prev.some((m) => m.id === incomingMsg.id || (m._id && m._id === incomingMsg._id))) {
+          return prev;
+        }
+        return [...prev, incomingMsg];
+      });
+    });
+
+    s.on("user_joined", ({ user: joinedUser, message }) => {
+      if (joinedUser?.name !== user?.name) {
+        toast(message || "Participant joined the consultation", { icon: "👋" });
+      }
+    });
+
+    return () => {
+      s.off("receive_message");
+      s.off("user_joined");
+      disconnectSocket();
+    };
+  }, [appointment.id, user, isDoc]);
+
   const handleSendMessage = useCallback(
     (e) => {
       e?.preventDefault();
       if (!inputMessage.trim()) return;
 
+      const currentRoom = appointment.id || "DRR-101";
+      const senderName = user?.name || (isDoc ? "Dr. Rashi Shrivastava" : "Ananya Sharma");
+      const senderRole = isDoc ? "doctor" : "patient";
       const newMsg = {
         id: Date.now(),
-        sender: user?.name || (isDoc ? "Dr. Rashi Shrivastava" : "Ananya Sharma"),
+        appointmentCode: currentRoom,
+        sender: senderName,
+        senderRole,
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         text: inputMessage,
       };
 
       setMessages((prev) => [...prev, newMsg]);
       setInputMessage("");
+
+      // Broadcast over real-time WebSockets
+      socket.emit("send_message", { room: currentRoom, message: newMsg });
+
+      // Persist to MongoDB backend
+      api.sendChatMessage(newMsg);
     },
-    [inputMessage, user?.name, isDoc]
+    [inputMessage, user?.name, isDoc, appointment.id]
   );
 
   const handleEndCall = () => {
