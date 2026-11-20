@@ -1,103 +1,104 @@
+// src/views/FAQs.jsx
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiHelpCircle } from "react-icons/fi";
 
-const faqs = [
-  { key: "q1" },
-  { key: "q2" },
-  { key: "q3" },
-  { key: "q4" },
+const clinicalFAQs = [
+  {
+    q: "Does Homeopathy take very long to show results?",
+    a: "This is a widespread myth! Acute ailments such as acidity, headaches, allergic sneezing, or sudden fevers respond within minutes to hours of taking the correct micro-potency. For deep-seated chronic conditions like 4-year-old atopic eczema or PCOD, gradual structural healing begins within 2 to 4 weeks without any steroid rebound.",
+  },
+  {
+    q: "Can I take Homeopathy alongside my ongoing BP, Thyroid, or Diabetic medications?",
+    a: "Yes, absolutely! Homeopathic remedies act on the neurological and vital energy plane and do not chemically interfere with conventional prescription drugs. We advise a 45-minute gap between your allopathic tablet and the homeopathic globule. As your constitutional health improves, your primary doctor can safely reduce chemical dosages.",
+  },
+  {
+    q: "Are there strict dietary restrictions like avoiding onion, garlic, or coffee?",
+    a: "In Dr. Rashi's modern classical approach, we only ask that you keep your mouth clean and avoid strong pungent substances (raw garlic, sour curd, or strong coffee) for 20–30 minutes before and after taking your dose. You do not need to starve or follow unrealistic diet plans.",
+  },
+  {
+    q: "How does the Online Video Consultation & Medicine Delivery work for outstation patients?",
+    a: "Patients outside Indore/Bhopal book an Online Video Consultation. You connect face-to-face with Dr. Rashi via our encrypted in-app tele-consultation room or Google Meet. Following your case evaluation, your custom-prepared remedies and care kit are dispatched via BlueDart express courier directly to your doorstep with live SMS tracking.",
+  },
+  {
+    q: "Are Homeopathic medicines completely safe for young children & pregnant women?",
+    a: "100% yes! Homeopathic preparations are formulated using micro-dilutions, meaning they contain zero aggressive chemicals, no steroids, and have zero side-effects. Toddlers gladly take the sweet lactose globules, and expectant mothers can safely take remedies for morning sickness and immunity.",
+  },
 ];
 
 const FAQs = () => {
-  const { t } = useTranslation();
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState(0);
 
-  const toggleFAQ = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
+  const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
 
   return (
     <section
       id="faqs"
-      className="relative overflow-hidden py-20 px-4 sm:px-8 md:px-20 
-                 bg-[radial-gradient(circle_at_top,_#eef2ff,_#ffffff_65%)]
-                 dark:bg-[radial-gradient(circle_at_top,_#020617,_#020617_65%)]"
+      className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-24 bg-gray-50/70 dark:bg-slate-900 transition-colors duration-300 relative overflow-hidden"
     >
-      {/* subtle glow */}
-      <div className="pointer-events-none absolute -top-32 -left-32 w-72 h-72 bg-indigo-400/20 blur-3xl rounded-full" />
-      <div className="pointer-events-none absolute top-1/2 -right-32 w-72 h-72 bg-cyan-400/20 blur-3xl rounded-full" />
+      <div className="max-w-4xl mx-auto relative z-10">
+        
+        {/* Header */}
+        <div className="text-center mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-xs font-bold text-indigo-700 dark:text-indigo-300">
+            <FiHelpCircle /> Patient Clarity & Answers
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Frequently Asked{" "}
+            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              Questions
+            </span>
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+            Transparent answers regarding classical homeopathy, treatment timelines, and consultation procedures.
+          </p>
+        </div>
 
-      <div className="relative max-w-5xl mx-auto">
-        {/* Heading */}
-        <motion.h2
-          initial={{ opacity: 0, y: -16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center 
-                     text-gray-900 dark:text-white"
-        >
-          {t("faq.title")}
-        </motion.h2>
-
-        <p className="mt-3 text-center text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Clear answers to common questions about treatment, appointments, and care.
-        </p>
-
-        <div className="mt-14 space-y-5">
-          {faqs.map((faq, index) => {
-            const isOpen = activeIndex === index;
+        {/* Accordion */}
+        <div className="space-y-4">
+          {clinicalFAQs.map((faq, index) => {
+            const isOpen = openIndex === index;
 
             return (
               <motion.div
-                key={faq.key}
-                initial={{ opacity: 0, y: 20 }}
+                key={index}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
-                className={`group rounded-3xl border backdrop-blur-xl transition-all
-                  ${
-                    isOpen
-                      ? "bg-white/80 dark:bg-gray-900/80 border-indigo-300 dark:border-indigo-500 shadow-[0_20px_60px_rgba(79,70,229,0.15)]"
-                      : "bg-white/60 dark:bg-gray-900/60 border-white/40 dark:border-gray-700 hover:shadow-lg"
-                  }`}
+                transition={{ duration: 0.3, delay: index * 0.06 }}
+                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                  isOpen
+                    ? "bg-white dark:bg-slate-800 border-indigo-400 dark:border-indigo-500 shadow-lg shadow-indigo-500/5"
+                    : "bg-white/70 dark:bg-slate-800/40 border-gray-200/80 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-600"
+                }`}
               >
-                {/* Question */}
                 <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between gap-6 px-6 py-6 text-left"
+                  type="button"
+                  onClick={() => toggle(index)}
+                  className="w-full py-5 px-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 dark:text-white text-sm sm:text-base cursor-pointer"
                 >
-                  <span className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-                    {t(`faq.${faq.key}.question`)}
-                  </span>
-
-                  <motion.span
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.25 }}
-                    className={`flex items-center justify-center w-9 h-9 rounded-full 
-                      ${
-                        isOpen
-                          ? "bg-indigo-600 text-white"
-                          : "bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400"
-                      }`}
+                  <span>{faq.q}</span>
+                  <span
+                    className={`p-2 rounded-xl text-xs shrink-0 transition-transform duration-300 ${
+                      isOpen
+                        ? "bg-indigo-600 text-white rotate-45"
+                        : "bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300"
+                    }`}
                   >
-                    <FiPlus className="text-lg" />
-                  </motion.span>
+                    <FiPlus size={16} />
+                  </span>
                 </button>
 
-                {/* Answer */}
-                <AnimatePresence>
+                <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: "easeInOut" }}
-                      className="px-6 pb-6 text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed"
+                      transition={{ duration: 0.3 }}
+                      className="px-6 pb-6 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed border-t border-gray-100 dark:border-slate-700/60 pt-4"
                     >
-                      {t(`faq.${faq.key}.answer`)}
+                      {faq.a}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -105,6 +106,7 @@ const FAQs = () => {
             );
           })}
         </div>
+
       </div>
     </section>
   );

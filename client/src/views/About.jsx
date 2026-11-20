@@ -1,101 +1,184 @@
+// src/views/About.jsx
 import React from "react";
-import { FiHeart, FiUserCheck } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import {
+  FiCheckCircle,
+  FiAward,
+  FiBookOpen,
+  FiUserCheck,
+  FiShield,
+  FiHeart,
+  FiCalendar,
+} from "react-icons/fi";
+import { FaUserMd, FaLeaf, FaHandsHelping, FaBalanceScale } from "react-icons/fa";
+
+const classicalPillars = [
+  {
+    icon: <FaLeaf className="text-emerald-500" />,
+    title: "100% Non-Toxic & Steroid Free",
+    desc: "Gentle natural micro-dilutions that trigger the body's self-healing vital force without liver strain, chemical dependency, or steroid rebound.",
+  },
+  {
+    icon: <FaBalanceScale className="text-indigo-500" />,
+    title: "Constitutional & Thermal Matching",
+    desc: "Treatment is personalized to your unique thermal affinity (hot/chilly), psychological temperament, food cravings, and family miasmatic history.",
+  },
+  {
+    icon: <FaHandsHelping className="text-purple-500" />,
+    title: "Root-Cause Eradication",
+    desc: "We don't simply mask skin eruptions with creams or quiet stomach burning with antacids. We resolve the internal disharmony to prevent relapse.",
+  },
+  {
+    icon: <FiShield className="text-amber-500" />,
+    title: "Safe for All Generations",
+    desc: "Sweet sugar globules loved by 2-year-old toddlers, safe for pregnant mothers, and completely gentle on geriatric elderly patients.",
+  },
+];
 
 const AboutSection = () => {
-  const { t } = useTranslation();
-
-  const icons = [
-    <FiUserCheck size={22} />,
-    <FiHeart size={22} />,
-    <FiHeart size={22} />,
-    <FiUserCheck size={22} />,
-  ];
-
-  // Medical related images
-  const images = [
-    "https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=800", // Doctor consultation
-    "https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=800", // Patient care
-    "https://images.pexels.com/photos/3845766/pexels-photo-3845766.jpeg?auto=compress&cs=tinysrgb&w=800", // Medical team
-    "https://images.pexels.com/photos/305565/pexels-photo-305565.jpeg?auto=compress&cs=tinysrgb&w=800", // Clinic interior
-  ];
-
-  const cards = t("about.cards", { returnObjects: true });
-
   return (
     <section
       id="about"
-      className="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white py-24 px-6 sm:px-10 md:px-24"
+      className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-24 bg-gradient-to-b from-slate-50 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 transition-colors duration-300 relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto text-center">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="bg-white/70 dark:bg-white/5 backdrop-blur-md p-8 rounded-2xl max-w-3xl mx-auto mb-16 shadow-lg"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            {t("about.name")}{" "}
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              {t("about.title")}
-            </span>
-          </h2>
-
-          <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
-            {t("about.intro", { name: t("about.name") })}
-          </p>
-        </motion.div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {cards.map((card, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className="group rounded-2xl overflow-hidden bg-white/80 dark:bg-slate-800/70 
-              border border-gray-200 dark:border-slate-700 
-              shadow-md hover:shadow-2xl 
-              transition-all duration-500 hover:-translate-y-2"
-            >
-              {/* Image */}
-              <div className="relative h-44 overflow-hidden">
-                <img
-                  src={images[idx]}
-                  alt={card.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                />
-
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
-
-                {/* Icon */}
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 
-                p-4 rounded-full border border-indigo-300 dark:border-indigo-600 
-                shadow-lg group-hover:scale-110 transition">
-                  <span className="text-indigo-600 dark:text-indigo-400">
-                    {icons[idx]}
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* Top Header Grid: Doctor Credentials & Biography */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+          
+          {/* Doctor Portrait Showcase (5 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5 relative"
+          >
+            <div className="relative mx-auto max-w-sm rounded-3xl overflow-hidden border-2 border-indigo-100 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-800">
+              <img
+                src="https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=800&q=80"
+                alt="Dr. Rashi Shrivastava"
+                className="w-full aspect-[4/5] object-cover object-top"
+              />
+              
+              {/* Doctor Stats Strip */}
+              <div className="p-6 bg-white dark:bg-slate-900 space-y-4">
+                <div className="flex items-center justify-between border-b border-gray-100 dark:border-slate-800 pb-3">
+                  <div>
+                    <h3 className="font-bold text-gray-950 dark:text-white text-base">
+                      Dr. Rashi Shrivastava
+                    </h3>
+                    <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold">
+                      BHMS • Classical Homoeopath
+                    </p>
+                  </div>
+                  <span className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+                    <FiAward size={20} />
                   </span>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="pt-12 pb-6 px-6 text-center space-y-3">
-                <h3 className="text-lg font-semibold tracking-wide text-gray-800 dark:text-white group-hover:text-indigo-600 transition">
-                  {card.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                  {card.desc}
-                </p>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800/80">
+                    <span className="text-gray-400 block text-[10px] uppercase">Specialty</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200">Chronic & Skin</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800/80">
+                    <span className="text-gray-400 block text-[10px] uppercase">Practice</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200">Classical Miasm</span>
+                  </div>
+                </div>
+
+                <Link
+                  to="/appointment"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition shadow-md"
+                >
+                  <FiCalendar /> Book 1-on-1 Session
+                </Link>
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </motion.div>
+
+          {/* Biography & Philosophy (7 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7 space-y-6"
+          >
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+              <FaUserMd /> Certified Doctor's Profile
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+              Dedicated to Restoring Health,{" "}
+              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                Not Just Masking Symptoms.
+              </span>
+            </h2>
+
+            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+              Dr. Rashi Shrivastava graduated with a Bachelor of Homeopathic Medicine and Surgery (BHMS). With rigorous training in classical repertorization and organon of medicine, she focuses on deep constitutional case evaluations.
+            </p>
+
+            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+              Her clinic has successfully managed over 5,000+ patient visits across Madhya Pradesh and across India via seamless high-definition tele-consultations. Every prescription is individually prepared with high-grade German and authentic Indian pharmacopeial dilutions.
+            </p>
+
+            {/* Checklist */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              {[
+                "Certified BHMS Medical Practitioner",
+                "Deep Constitutional Case Repertorization",
+                "Pure High-Potency Homoeopathic Dilutions",
+                "Doorstep Dispensary Dispatch with Courier Tracking",
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200">
+                  <FiCheckCircle className="text-emerald-500 shrink-0 text-base" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
         </div>
+
+        {/* Bottom 4 Pillars Section */}
+        <div className="mt-12">
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">
+              Why Classical Homeopathy?
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+              Understanding the 4 foundational principles that make homeopathy the safest choice for long-term health.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {classicalPillars.map((pillar, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="p-6 rounded-3xl bg-white dark:bg-slate-800/60 border border-gray-200/80 dark:border-slate-700/80 shadow-sm hover:shadow-xl hover:border-indigo-400 transition-all duration-300 space-y-3"
+              >
+                <div className="p-3 w-fit rounded-2xl bg-gray-50 dark:bg-slate-900 text-2xl shadow-inner">
+                  {pillar.icon}
+                </div>
+                <h4 className="text-base font-bold text-gray-900 dark:text-white">
+                  {pillar.title}
+                </h4>
+                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                  {pillar.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );

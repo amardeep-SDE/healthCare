@@ -1,115 +1,119 @@
-import React from "react";
-import {
-  FiMail,
-  FiPhoneCall,
-  FiUser,
-  FiMessageCircle,
-  FiMapPin,
-} from "react-icons/fi";
+// src/views/ContactBanner.jsx
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-
-const fadeUpVariant = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.9,
-      ease: "easeOut",
-    },
-  },
-};
+import {
+  FiPhoneCall,
+  FiMail,
+  FiMapPin,
+  FiClock,
+  FiCalendar,
+  FiSend,
+  FiCheckCircle,
+} from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Contact = () => {
-  const { t } = useTranslation();
+  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.phone) {
+      toast.error("Please enter your name and phone number");
+      return;
+    }
+    setSubmitted(true);
+    toast.success("Thank you! Dr. Rashi's clinic reception will contact you shortly.");
+    setForm({ name: "", phone: "", message: "" });
+  };
 
   return (
     <section
       id="contact"
-      className="bg-gradient-to-br from-blue-100 via-cyan-100 to-green-100 
-                 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 
-                 py-20 px-6 sm:px-10 md:px-24 relative"
+      className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-24 bg-gradient-to-b from-white via-indigo-50/40 to-slate-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 transition-colors duration-300 relative overflow-hidden"
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[url('/contact-bg.svg')] bg-contain bg-no-repeat bg-right opacity-10 dark:opacity-5 pointer-events-none"></div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <span className="px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-xs font-bold text-indigo-700 dark:text-indigo-300">
+            Clinic Connect & Assistance
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Visit Our Clinic or{" "}
+            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              Consult from Anywhere
+            </span>
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+            Reach out directly for appointment inquiries, follow-up dosage guidance, or medical report reviews.
+          </p>
+        </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl font-extrabold text-center 
-                     text-gray-800 dark:text-white mb-4"
-        >
-          {t("contact.title")}
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center text-gray-600 dark:text-gray-400 mb-14 max-w-2xl mx-auto"
-        >
-          {t("contact.subtitle")}
-        </motion.p>
-
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Info */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
-            className="bg-white/80 dark:bg-gray-900/70 backdrop-blur-lg 
-                       rounded-2xl shadow-xl p-8 space-y-6"
-          >
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              {t("contact.description")}
-            </p>
-
-            <div className="space-y-5">
-              {/* Phone */}
-              <div className="flex items-center space-x-3 group">
-                <FiPhoneCall className="text-indigo-600 text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+          
+          {/* Left Column: Direct Clinic Cards & Map (7 Cols) */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+            
+            {/* Quick Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              {/* Phone / WhatsApp */}
+              <div className="p-6 rounded-3xl bg-white dark:bg-slate-800/80 border border-gray-200/80 dark:border-slate-700 shadow-sm space-y-3">
+                <div className="p-3 w-fit rounded-2xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400">
+                  <FiPhoneCall size={22} />
+                </div>
+                <h4 className="text-sm font-bold text-gray-900 dark:text-white">Call Reception</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Mon - Sat: 10:00 AM - 07:00 PM</p>
                 <a
-                  href={`tel:${t("contact.phone")}`}
-                  className="text-lg font-medium text-gray-800 dark:text-gray-300 group-hover:text-indigo-600 transition-all"
+                  href="tel:+919876543210"
+                  className="block text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
                 >
-                  {t("contact.phone")}
+                  +91 98765 43210
                 </a>
               </div>
 
-              {/* Email */}
-              <div className="flex items-center space-x-3 group">
-                <FiMail className="text-indigo-600 text-2xl transition-transform duration-300 group-hover:scale-125" />
+              {/* Direct WhatsApp */}
+              <div className="p-6 rounded-3xl bg-white dark:bg-slate-800/80 border border-gray-200/80 dark:border-slate-700 shadow-sm space-y-3">
+                <div className="p-3 w-fit rounded-2xl bg-emerald-50 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400">
+                  <FaWhatsapp size={22} />
+                </div>
+                <h4 className="text-sm font-bold text-gray-900 dark:text-white">Instant WhatsApp</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Case queries & prescription refills</p>
                 <a
-                  href={`mailto:${t("contact.email")}`}
-                  className="text-lg font-medium text-gray-800 dark:text-gray-300 group-hover:text-indigo-600 transition-all"
+                  href="https://wa.me/919876543210?text=Hello%20Dr.%20Rashi,%20I%20would%20like%20to%20inquire%20about%20a%20homeopathy%20consultation."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                 >
-                  {t("contact.email")}
+                  Chat on WhatsApp →
                 </a>
               </div>
 
-              {/* Address */}
-              <div className="flex items-start space-x-3 mt-4">
-                <FiMapPin className="text-indigo-600 text-2xl mt-1" />
-                <div className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                  <p className="font-semibold text-gray-800 dark:text-white">
-                    {t("clinicAddress.addressTitle")}
-                  </p>
-                  <p>{t("clinicAddress.addressLine1")}</p>
-                  <p>{t("clinicAddress.addressLine2")}</p>
+              {/* Physical Clinic Address */}
+              <div className="p-6 rounded-3xl bg-white dark:bg-slate-800/80 border border-gray-200/80 dark:border-slate-700 shadow-sm space-y-3 sm:col-span-2">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-2xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shrink-0">
+                    <FiMapPin size={22} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-gray-900 dark:text-white">Clinic Address</h4>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mt-1">
+                      Dr. Rashi Homeopathic Healing Clinic, 2nd Floor, Healthcare Arcade, Near 56 Dukan, New Palasia, Indore, MP - 452001
+                    </p>
+                    <p className="text-[11px] text-gray-400 mt-1">
+                      (Also holding periodic outstation clinics in Kolar Road, Bhopal MP)
+                    </p>
+                  </div>
                 </div>
               </div>
+
             </div>
 
-            {/* Map */}
-            <div className="w-full h-64 rounded-xl overflow-hidden shadow-lg mt-6">
+            {/* Embedded Location Map */}
+            <div className="w-full h-56 rounded-3xl overflow-hidden border border-gray-200/80 dark:border-slate-700 shadow-md">
               <iframe
                 title="clinic-location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.3478260599365!2d75.86769307508866!3d22.754998179351095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd065d3a09d3%3A0xf7d9a2c0c51a6a35!2sNew%20Palasia%2C%20Indore%2C%20Madhya%20Pradesh%20452001!5e0!3m2!1sen!2sin!4v1720079595559!5m2!1sen!2sin"
@@ -119,75 +123,93 @@ const Contact = () => {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.form
-            variants={fadeUpVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            className="bg-white/80 dark:bg-gray-900/70 backdrop-blur-lg 
-                       p-10 rounded-2xl shadow-xl space-y-6"
-          >
-            <div className="relative group">
-              <FiUser className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-indigo-600 transition" />
-              <input
-                type="text"
-                placeholder={t("contact.form.name")}
-                className="pl-10 w-full border border-gray-300 dark:border-gray-700 
-                           rounded-xl py-3 px-4 bg-white dark:bg-gray-800 
-                           text-gray-900 dark:text-gray-100 placeholder-gray-400 
-                           dark:placeholder-gray-500 focus:outline-none 
-                           focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 
-                           shadow-sm transition-all"
               />
             </div>
 
-            <div className="relative group">
-              <FiMail className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-indigo-600 transition" />
-              <input
-                type="email"
-                placeholder={t("contact.form.email")}
-                className="pl-10 w-full border border-gray-300 dark:border-gray-700 
-                           rounded-xl py-3 px-4 bg-white dark:bg-gray-800 
-                           text-gray-900 dark:text-gray-100 placeholder-gray-400 
-                           dark:placeholder-gray-500 focus:outline-none 
-                           focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 
-                           shadow-sm transition-all"
-              />
+          </div>
+
+          {/* Right Column: Callback Request Form & Instant Consultation Card (5 Cols) */}
+          <div className="lg:col-span-5 rounded-3xl bg-white dark:bg-slate-800/90 border border-gray-200/80 dark:border-slate-700 p-8 shadow-xl flex flex-col justify-between space-y-6">
+            
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs font-bold">
+                <FiCalendar /> Request Free Callback
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                Have Questions Before Booking?
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                Leave your details below and our clinic reception will call you back within 2 business hours to explain treatment duration and slot availability.
+              </p>
             </div>
 
-            <div className="relative group">
-              <FiMessageCircle className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-indigo-600 transition" />
-              <textarea
-                rows="4"
-                placeholder={t("contact.form.message")}
-                className="pl-10 w-full border border-gray-300 dark:border-gray-700 
-                           rounded-xl py-3 px-4 bg-white dark:bg-gray-800 
-                           text-gray-900 dark:text-gray-100 placeholder-gray-400 
-                           dark:placeholder-gray-500 focus:outline-none 
-                           focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 
-                           shadow-sm transition-all"
-              />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Rahul Sharma"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 outline-none transition"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  placeholder="e.g. +91 98234 56789"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 outline-none transition"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                  Health Concern / Symptoms (Optional)
+                </label>
+                <textarea
+                  rows="3"
+                  placeholder="Briefly describe your skin, gastric, or hair concerns..."
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 outline-none transition"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 transition hover:scale-[1.01]"
+              >
+                <FiSend /> Request Callback
+              </button>
+            </form>
+
+            {/* Direct Booking Highlight Link */}
+            <div className="pt-4 border-t border-gray-100 dark:border-slate-700/60 text-center">
+              <span className="text-xs text-gray-500 dark:text-gray-400 block mb-2">
+                Ready to consult Dr. Rashi directly?
+              </span>
+              <Link
+                to="/appointment"
+                className="inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+              >
+                Book Confirmed Consultation Slot (₹500) →
+              </Link>
             </div>
 
-            <button
-              type="submit"
-              className="relative group overflow-hidden 
-                         bg-gradient-to-r from-indigo-600 to-indigo-700 
-                         hover:from-indigo-700 hover:to-indigo-800 
-                         text-white px-6 py-3 rounded-full transition-all 
-                         w-full font-semibold tracking-wide shadow-md"
-            >
-              <span className="relative z-10">{t("contact.form.submit")}</span>
-              <span className="absolute left-[-120%] top-0 h-full w-32 bg-white/30 
-                               opacity-30 rotate-12 group-hover:animate-shine"></span>
-            </button>
-          </motion.form>
+          </div>
+
         </div>
+
       </div>
     </section>
   );
