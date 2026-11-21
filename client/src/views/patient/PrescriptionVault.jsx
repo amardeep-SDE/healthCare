@@ -31,10 +31,13 @@ const PrescriptionCard = memo(({ rx, onOrderMedicines }) => {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => toast.success("Prescription PDF downloaded!")}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+            onClick={() => {
+              window.open(`http://localhost:5000/api/prescriptions/${rx.id || rx._id || "RX-101"}/pdf`, "_blank");
+              toast.success("Opening official Doctor Prescription PDF...");
+            }}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-xs"
           >
-            <FiDownload /> Download Slip
+            <FiDownload /> Official Rx PDF
           </button>
           <button
             onClick={() => onOrderMedicines(rx)}

@@ -1,6 +1,8 @@
 // server/index.js
 import express from "express";
 import http from "http";
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
@@ -18,9 +20,13 @@ import patientRoutes from "./routes/patientRoutes.js";
 import medicineRoutes from "./routes/medicineRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 // Load Environment Variables
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const server = http.createServer(app);
@@ -52,6 +58,9 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+// Serve uploaded medical reports & photos statically
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // Health Check API
 app.get("/api/health", (req, res) => {
   res.json({
@@ -70,6 +79,7 @@ app.use("/api/patients", patientRoutes);
 app.use("/api/medicines", medicineRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // Error Handling Middleware
 app.use(notFound);
@@ -82,6 +92,8 @@ server.listen(PORT, async () => {
   console.log(`🌿 Dr. Rashi Homeo Clinic Backend Server Started`);
   console.log(`🚀 Port: http://localhost:${PORT}`);
   console.log(`📡 Socket.io: Initialized for Live Video & Real-time Chat`);
+  console.log(`📄 PDF Generator: Ready at /api/prescriptions/:id/pdf`);
+  console.log(`📁 File Uploads: Ready at /api/upload & /uploads`);
   console.log(`======================================================\n`);
   await connectDB();
 });

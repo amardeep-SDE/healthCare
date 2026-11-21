@@ -95,6 +95,8 @@ export const PatientProfile = () => {
   // Upload modal state
   const [uploadTitle, setUploadTitle] = useState("");
   const [uploadType, setUploadType] = useState("Lab Report (PDF)");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   // Memoized BMI Calculation
   const bmiData = useMemo(() => {
@@ -140,24 +142,52 @@ export const PatientProfile = () => {
   );
 
   const handleAddDocument = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
       if (!uploadTitle.trim()) return;
+
+      setIsUploading(true);
+      let fileUrl = null;
+      let calculatedSize = selectedFile ? `${(selectedFile.size / (1024 * 1024)).toFixed(1)} MB` : "1.5 MB";
+
+      if (selectedFile) {
+        try {
+          const formData = new FormData();
+          formData.append("file", selectedFile);
+
+          const res = await fetch("http://localhost:5000/api/upload", {
+            method: "POST",
+            body: formData,
+            signal: AbortSignal.timeout(6000),
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            fileUrl = data.fileUrl;
+            toast.success("File stored safely on clinic server!");
+          }
+        } catch (err) {
+          console.warn("Upload fallback to local preview:", err.message);
+        }
+      }
 
       const newDoc = {
         id: `DOC-${Math.floor(100 + Math.random() * 900)}`,
         title: uploadTitle,
         type: uploadType,
         date: new Date().toISOString().split("T")[0],
-        size: "1.8 MB",
+        size: calculatedSize,
+        fileUrl,
         doctorNotes: "Uploaded by patient for case evaluation.",
       };
 
       setDocuments((prev) => [newDoc, ...prev]);
       setUploadTitle("");
-      toast.success("Medical record uploaded to your Health Locker!");
+      setSelectedFile(null);
+      setIsUploading(false);
+      toast.success("Medical record saved to your Health Locker!");
     },
-    [uploadTitle, uploadType]
+    [uploadTitle, uploadType, selectedFile]
   );
 
   const handleDeleteDocument = useCallback((id) => {
@@ -539,33 +569,48 @@ export const PatientProfile = () => {
                 Attach blood test reports, allergy panels, or close-up photos of your skin/hair condition. Dr. Rashi inspects these before consultations.
               </p>
 
-              <form onSubmit={handleAddDocument} className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="text"
-                  required
-                  placeholder="Document Title (e.g. Thyroid Panel Nov 2026)"
-                  value={uploadTitle}
-                  onChange={(e) => setUploadTitle(e.target.value)}
-                  className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm dark:text-white outline-none focus:ring-2 focus:ring-indigo-500"
-                />
+              <form onSubmit={handleAddDocument} className="space-y-3">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Document Title (e.g. Thyroid Panel Nov 2026)"
+                    value={uploadTitle}
+                    onChange={(e) => setUploadTitle(e.target.value)}
+                    className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm dark:text-white outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
 
-                <select
-                  value={uploadType}
-                  onChange={(e) => setUploadType(e.target.value)}
-                  className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm dark:text-white outline-none"
-                >
-                  <option value="Lab Report (PDF)">Lab Report (PDF)</option>
-                  <option value="Clinical Photo (JPG)">Condition Photo (JPG/PNG)</option>
-                  <option value="Previous Prescription">Past Prescription</option>
-                  <option value="Other Medical Record">Other Record</option>
-                </select>
+                  <select
+                    value={uploadType}
+                    onChange={(e) => setUploadType(e.target.value)}
+                    className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm dark:text-white outline-none"
+                  >
+                    <option value="Lab Report (PDF)">Lab Report (PDF)</option>
+                    <option value="Clinical Photo (JPG)">Condition Photo (JPG/PNG)</option>
+                    <option value="Previous Prescription">Past Prescription</option>
+                    <option value="Other Medical Record">Other Record</option>
+                  </select>
+                </div>
 
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-indigo-600/30 transition hover:scale-105"
-                >
-                  <FiPlus /> Upload to Locker
-                </button>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+                  <div className="w-full sm:w-auto flex items-center gap-2">
+                    <input
+                      type="file"
+                      id="medicalReportFile"
+                      accept=".pdf,image/png,image/jpeg,image/webp"
+                      onChange={(e) => setSelectedFile(e.target.files[0] || null)}
+                      className="text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-50 dark:file:bg-indigo-950 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 cursor-pointer"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isUploading}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-indigo-600/30 transition hover:scale-105 disabled:opacity-50"
+                  >
+                    <FiPlus /> {isUploading ? "Uploading..." : "Save to Health Locker"}
+                  </button>
+                </div>
               </form>
             </div>
 
@@ -606,10 +651,16 @@ export const PatientProfile = () => {
 
                   <div className="flex items-center gap-2 justify-end">
                     <button
-                      onClick={() => toast.success(`Downloading ${doc.title}...`)}
+                      onClick={() => {
+                        if (doc.fileUrl) {
+                          window.open(`http://localhost:5000${doc.fileUrl}`, "_blank");
+                        } else {
+                          toast.success(`Opening ${doc.title}...`);
+                        }
+                      }}
                       className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                     >
-                      <FiDownload /> Download
+                      <FiDownload /> View / Download
                     </button>
                     <button
                       onClick={() => handleDeleteDocument(doc.id)}
