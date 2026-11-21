@@ -278,7 +278,7 @@ export const ConsultationRoom = () => {
             </div>
 
             {/* Floating Self-Preview (PiP) */}
-            <div className="absolute bottom-4 right-4 w-36 sm:w-48 aspect-video rounded-2xl overflow-hidden bg-gray-800 border-2 border-indigo-500/80 shadow-2xl">
+            <div className="absolute bottom-4 right-4 w-28 sm:w-48 aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-gray-800 border-2 border-indigo-500/80 shadow-2xl">
               {isVideoOn ? (
                 <img
                   src={
@@ -302,29 +302,29 @@ export const ConsultationRoom = () => {
           </div>
 
           {/* Bottom Dock Controls */}
-          <div className="mt-4 flex items-center justify-center gap-3 z-20">
+          <div className="mt-3 sm:mt-4 flex items-center justify-center gap-1.5 sm:gap-3 z-20 flex-wrap">
             <button
               onClick={() => setIsMicOn(!isMicOn)}
-              className={`p-3.5 sm:p-4 rounded-2xl transition shadow-lg ${
+              className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl transition shadow-lg ${
                 isMicOn
                   ? "bg-gray-800 hover:bg-gray-700 text-white"
                   : "bg-rose-600 hover:bg-rose-700 text-white"
               }`}
               title={isMicOn ? "Mute Microphone" : "Unmute Microphone"}
             >
-              {isMicOn ? <FiMic size={20} /> : <FiMicOff size={20} />}
+              {isMicOn ? <FiMic size={18} /> : <FiMicOff size={18} />}
             </button>
 
             <button
               onClick={() => setIsVideoOn(!isVideoOn)}
-              className={`p-3.5 sm:p-4 rounded-2xl transition shadow-lg ${
+              className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl transition shadow-lg ${
                 isVideoOn
                   ? "bg-gray-800 hover:bg-gray-700 text-white"
                   : "bg-rose-600 hover:bg-rose-700 text-white"
               }`}
               title={isVideoOn ? "Turn Camera Off" : "Turn Camera On"}
             >
-              {isVideoOn ? <FiVideo size={20} /> : <FiVideoOff size={20} />}
+              {isVideoOn ? <FiVideo size={18} /> : <FiVideoOff size={18} />}
             </button>
 
             <button
@@ -334,45 +334,45 @@ export const ConsultationRoom = () => {
                   icon: "🖥️",
                 });
               }}
-              className={`p-3.5 sm:p-4 rounded-2xl transition shadow-lg hidden sm:block ${
+              className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl transition shadow-lg hidden sm:block ${
                 isScreenSharing
                   ? "bg-indigo-600 text-white"
                   : "bg-gray-800 hover:bg-gray-700 text-white"
               }`}
               title="Share Screen / Reports"
             >
-              <FiShare2 size={20} />
+              <FiShare2 size={18} />
             </button>
 
             {/* Doctor In-Call Prescription Button */}
             {isDoc && (
               <button
                 onClick={() => setIsRxModalOpen(true)}
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-lg transition hover:scale-105"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-lg transition hover:scale-105"
               >
-                <FaPills /> Write Rx Pad
+                <FaPills /> <span className="hidden sm:inline">Write</span> Rx Pad
               </button>
             )}
 
             {/* Toggle Chat Drawer */}
             <button
               onClick={() => setIsChatOpen(!isChatOpen)}
-              className={`p-3.5 sm:p-4 rounded-2xl transition shadow-lg ${
+              className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl transition shadow-lg ${
                 isChatOpen
                   ? "bg-indigo-600 text-white"
                   : "bg-gray-800 hover:bg-gray-700 text-white"
               }`}
               title="Toggle In-Call Chat"
             >
-              <FiMessageSquare size={20} />
+              <FiMessageSquare size={18} />
             </button>
 
             {/* End Call */}
             <button
               onClick={handleEndCall}
-              className="p-3.5 sm:p-4 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white transition shadow-lg flex items-center gap-2 font-bold px-6"
+              className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-rose-600 hover:bg-rose-700 text-white transition shadow-lg flex items-center gap-1.5 font-bold px-3 sm:px-6"
             >
-              <FiPhoneOff size={20} />
+              <FiPhoneOff size={18} />
               <span className="hidden sm:inline">End Call</span>
             </button>
           </div>
@@ -382,10 +382,11 @@ export const ConsultationRoom = () => {
         <AnimatePresence>
           {isChatOpen && (
             <motion.div
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "360px", opacity: 1 }}
-              exit={{ width: 0, opacity: 0 }}
-              className="w-80 sm:w-96 bg-gray-900 border-l border-gray-800 flex flex-col h-full"
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "tween", duration: 0.25 }}
+              className="fixed md:relative inset-y-0 right-0 z-30 w-full sm:w-96 bg-gray-900 border-l border-gray-800 flex flex-col h-full shadow-2xl"
             >
               {/* Chat Header */}
               <div className="p-4 border-b border-gray-800 flex items-center justify-between bg-gray-900/60">

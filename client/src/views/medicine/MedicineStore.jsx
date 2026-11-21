@@ -126,10 +126,10 @@ export const MedicineStore = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-indigo-700 hover:bg-indigo-50 font-bold text-sm shadow-xl transition hover:scale-105"
+              className="w-full sm:w-auto justify-center relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-indigo-700 hover:bg-indigo-50 font-bold text-sm shadow-xl transition hover:scale-105"
             >
               <FiShoppingCart className="text-lg" />
               <span>View Cart ({cartCount})</span>
@@ -141,7 +141,7 @@ export const MedicineStore = () => {
             </button>
             <Link
               to="/orders"
-              className="px-5 py-3.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-sm font-semibold border border-white/30 transition"
+              className="w-full sm:w-auto text-center px-5 py-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-sm font-semibold border border-white/30 transition"
             >
               Track Orders
             </Link>

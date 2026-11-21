@@ -49,27 +49,27 @@ const PatientEMRModal = memo(({ patient, isOpen, onClose, onOpenPrescription }) 
       {/* Drawer / Modal */}
       <div className="relative w-full max-w-4xl bg-white dark:bg-gray-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden z-10 my-6 max-h-[92vh] flex flex-col">
         {/* Header */}
-        <div className="p-6 bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-700 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="p-4 sm:p-6 bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-700 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <img
               src={patient.avatar}
               alt={patient.name}
-              className="w-16 h-16 rounded-2xl object-cover border-2 border-indigo-300 shadow-md"
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-indigo-300 shadow-md flex-shrink-0"
             />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-white/20">
                   {patient.id}
                 </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 font-bold">
+                <span className="text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 font-bold">
                   {patient.treatmentStatus}
                 </span>
               </div>
-              <h2 className="text-2xl font-black mt-1">
+              <h2 className="text-lg sm:text-2xl font-black mt-1">
                 {patient.name} ({patient.gender}, {patient.age} yrs)
               </h2>
-              <p className="text-xs text-indigo-200 mt-0.5">
-                📍 {patient.city} • 📞 {patient.phone} • Blood Group: {patient.bloodGroup}
+              <p className="text-[11px] sm:text-xs text-indigo-200 mt-0.5">
+                📍 {patient.city} • 📞 {patient.phone} • Blood: {patient.bloodGroup}
               </p>
             </div>
           </div>
@@ -77,21 +77,21 @@ const PatientEMRModal = memo(({ patient, isOpen, onClose, onOpenPrescription }) 
           <div className="flex items-center gap-2 self-end sm:self-center">
             <button
               onClick={() => onOpenPrescription(patient)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-md transition hover:scale-105"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-md transition hover:scale-105"
             >
               <FaPills /> Write Rx
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-full text-white/80 hover:text-white hover:bg-white/10"
+              className="p-1.5 sm:p-2 rounded-full text-white/80 hover:text-white hover:bg-white/10"
             >
-              <FiX size={22} />
+              <FiX size={20} />
             </button>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 px-6 pt-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+        <div className="flex items-center gap-2 px-4 sm:px-6 pt-3 sm:pt-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50 overflow-x-auto whitespace-nowrap scrollbar-none">
           {[
             { id: "casesheet", label: "Constitutional Case Sheet", icon: <FaNotesMedical /> },
             { id: "notes", label: "Doctor Clinical Observations", icon: <FiEdit3 /> },

@@ -356,7 +356,7 @@ export const AppointmentBooking = () => {
                   <h3 className="text-base font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                     <FiCalendar className="text-indigo-600" /> Select Appointment Date
                   </h3>
-                  <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none sm:grid sm:grid-cols-7">
                     {availableDates.map((item) => {
                       const isSelected = selectedDate === item.fullDate;
                       return (
@@ -364,7 +364,7 @@ export const AppointmentBooking = () => {
                           key={item.fullDate}
                           type="button"
                           onClick={() => setSelectedDate(item.fullDate)}
-                          className={`p-3 rounded-2xl text-center border transition-all ${
+                          className={`p-3 min-w-[70px] sm:min-w-0 flex-shrink-0 sm:flex-shrink rounded-2xl text-center border transition-all ${
                             isSelected
                               ? "bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-500/20 scale-105"
                               : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-indigo-400"
@@ -561,18 +561,18 @@ export const AppointmentBooking = () => {
                   />
                 </div>
 
-                <div className="flex justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-300 dark:border-gray-600 font-semibold text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-gray-300 dark:border-gray-600 font-semibold text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   >
                     <FiArrowLeft /> Back
                   </button>
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg shadow-indigo-600/30 transition hover:scale-105"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg shadow-indigo-600/30 transition hover:scale-105"
                   >
                     Next: Payment & Review <FiArrowRight />
                   </button>
@@ -674,11 +674,11 @@ export const AppointmentBooking = () => {
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center pt-2">
+                <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-3 pt-2">
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-300 dark:border-gray-600 font-semibold text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-gray-300 dark:border-gray-600 font-semibold text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   >
                     <FiArrowLeft /> Back
                   </button>
@@ -687,7 +687,7 @@ export const AppointmentBooking = () => {
                     type="button"
                     onClick={handleFinalBooking}
                     disabled={bookMutation.isPending}
-                    className="inline-flex items-center gap-2 px-9 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-700 hover:to-indigo-700 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition hover:scale-105 active:scale-95 disabled:opacity-50"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-9 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-700 hover:to-indigo-700 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition hover:scale-105 active:scale-95 disabled:opacity-50"
                   >
                     {bookMutation.isPending ? "Processing Payment..." : `Pay ${formatCurrency(DOCTOR_INFO.consultationFee)} & Confirm`}
                   </button>
