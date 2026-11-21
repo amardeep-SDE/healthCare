@@ -27,7 +27,7 @@ const appointmentSchema = new mongoose.Schema(
     },
     concern: { type: String, required: true },
     symptoms: { type: String },
-    fee: { type: Number, default: 500 },
+    fee: { type: Number, default: 200 },
     status: {
       type: String,
       enum: ["Confirmed", "Pending", "Delivered", "Cancelled"],

@@ -377,7 +377,7 @@ const Header = () => {
                             <FiCalendar /> {t("nav.bookConsult") || "Book Consult"}
                           </span>
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white">
-                            ₹500
+                            ₹200
                           </span>
                         </Link>
                         <Link

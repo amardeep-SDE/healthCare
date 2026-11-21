@@ -36,7 +36,7 @@ export const bookAppointment = async (req, res) => {
       mode: mode || "Online Video",
       concern,
       symptoms,
-      fee: fee || 500,
+      fee: fee || 200,
       status: "Confirmed",
       paymentStatus: "Paid",
       paymentMethod: paymentMethod || "UPI",

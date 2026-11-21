@@ -137,8 +137,8 @@ const AboutSection = () => {
 
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
               {isHi
-                ? "उनके क्लिनिक ने मध्य प्रदेश और पूरे भारत में 5,000+ से अधिक मरीज़ों को डिजिटल टेली-कंसल्टेशन और क्लिनिक विज़िट्स के माध्यम से स्वस्थ किया है। हर नुस्खा प्रामाणिक जर्मन व भारतीय उच्च-पोटेंसी दवाओं से व्यक्तिगत रूप से तैयार किया जाता है।"
-                : "Her clinic has successfully managed over 5,000+ patient visits across Madhya Pradesh and across India via seamless high-definition tele-consultations. Every prescription is individually prepared with high-grade German and authentic Indian pharmacopeial dilutions."}
+                ? "उनके क्लिनिक ने मध्य प्रदेश और आसपास के क्षेत्रों में 500+ से अधिक मरीज़ों को डिजिटल टेली-कंसल्टेशन और क्लिनिक विज़िट्स के माध्यम से स्वस्थ किया है। हर नुस्खा प्रामाणिक जर्मन व भारतीय उच्च-पोटेंसी दवाओं से व्यक्तिगत रूप से तैयार किया जाता है।"
+                : "Her clinic has successfully consulted over 500+ patient visits across Madhya Pradesh and surrounding regions via seamless high-definition tele-consultations and clinic visits. Every prescription is individually prepared with high-grade German and authentic Indian pharmacopeial dilutions."}
             </p>
 
             {/* Checklist */}

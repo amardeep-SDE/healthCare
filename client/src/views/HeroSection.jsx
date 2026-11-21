@@ -113,7 +113,7 @@ const HeroSection = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-xl shadow-indigo-500/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <FiCalendar className="text-lg" />
-                <span>{t("hero.bookBtn") || "Book Video Consultation"} (₹500)</span>
+                <span>{t("hero.bookBtn") || "Book Video Consultation"} (₹200)</span>
                 <FiArrowUpRight className="text-lg" />
               </Link>
 
@@ -157,7 +157,7 @@ const HeroSection = () => {
                     <span className="font-bold text-gray-900 dark:text-white ml-1">4.9/5</span>
                   </div>
                   <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                    {i18n.language?.startsWith("hi") ? "1,450+ स्वस्थ मरीज़ों का भरोसा" : "From 1,450+ Recovered Patients"}
+                    {i18n.language?.startsWith("hi") ? "500+ स्वस्थ मरीज़ों का भरोसा" : "From 500+ Recovered Patients"}
                   </p>
                 </div>
               </div>
@@ -218,8 +218,10 @@ const HeroSection = () => {
                   <span className="text-[11px] font-medium text-gray-600 dark:text-gray-300">Positive Prognosis</span>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/60 text-center">
-                  <span className="block text-2xl font-black text-emerald-600 dark:text-emerald-400">5,000+</span>
-                  <span className="text-[11px] font-medium text-gray-600 dark:text-gray-300">Cases Treated</span>
+                  <span className="block text-2xl font-black text-emerald-600 dark:text-emerald-400">500+</span>
+                  <span className="text-[11px] font-medium text-gray-600 dark:text-gray-300">
+                    {i18n.language?.startsWith("hi") ? "मरीज़ों का उपचार" : "Cases Treated"}
+                  </span>
                 </div>
               </div>
 

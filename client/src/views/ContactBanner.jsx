@@ -233,8 +233,8 @@ const Contact = () => {
                 className="inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
               >
                 {isHi
-                  ? "कन्फ़र्म परामर्श स्लॉट बुक करें (₹500) →"
-                  : "Book Confirmed Consultation Slot (₹500) →"}
+                  ? "कन्फ़र्म परामर्श स्लॉट बुक करें (₹200) →"
+                  : "Book Confirmed Consultation Slot (₹200) →"}
               </Link>
             </div>
 

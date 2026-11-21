@@ -229,7 +229,7 @@ const Benefits = () => {
               to="/appointment"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-xl shadow-indigo-500/20 transition hover:scale-105"
             >
-              {isHi ? "अपनी स्वास्थ्य यात्रा आज ही शुरू करें (₹500)" : "Start Your Own Recovery Journey (₹500)"} <FiArrowRight />
+              {isHi ? "अपनी स्वास्थ्य यात्रा आज ही शुरू करें (₹200)" : "Start Your Own Recovery Journey (₹200)"} <FiArrowRight />
             </Link>
           </div>
         </div>
