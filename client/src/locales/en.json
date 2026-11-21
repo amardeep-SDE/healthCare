@@ -7,16 +7,40 @@
     "myAppointments": "My Appointments",
     "dashboard": "Dashboard",
     "login": "Login",
-    "signup": "Sign up"
+    "signup": "Sign up",
+    "clinicControl": "Clinic Control",
+    "patientEMR": "Patient EMR",
+    "dispensaryDispatch": "Dispensary Dispatch",
+    "bookConsult": "Book Consult",
+    "dispensary": "Dispensary",
+    "healthMeter": "Health Meter",
+    "medicalProfile": "Medical Profile",
+    "myVisits": "My Visits",
+    "trackOrders": "Track Orders",
+    "switchRole": "Switch Role",
+    "modeDoctor": "Dr. Rashi (Super Admin)",
+    "modePatient": "Patient (Ananya Sharma)"
   },
 
   "hero": {
-    "label": "Trusted BHMS Care",
-    "headingPrefix": "Natural Healing by",
-    "typewriter": ["Homeopathy", "Dr. Rashi"],
-    "description": "Experience personalized homeopathy treatments, online consultations, and complete care for your wellness journey.",
-    "book": "Book Appointment",
-    "view": "View Treatments"
+    "badge": "Dr. Rashi Shrivastava • BHMS Certified Classical Homeopath",
+    "verified": "Verified Clinic",
+    "headline1": "Gentle Root-Cause",
+    "headlineHighlight": "Healing With",
+    "typewriter": [
+      "Dr. Rashi Shrivastava",
+      "Classical Homeopathy",
+      "Zero Side-Effects",
+      "Constitutional Care"
+    ],
+    "description": "Specialized in chronic skin disorders (eczema & psoriasis), stubborn hair fall, gastric acidity, and women's hormonal balance. Treat the root cause with individual constitutional micro-potencies—not temporary steroid suppression.",
+    "videoConsult": "Pan-India Video Consult",
+    "inClinic": "In-Clinic Visit (Indore/Bhopal)",
+    "nonToxic": "100% Non-Toxic & Steroid Free",
+    "bookBtn": "Book Video Consultation",
+    "exploreBtn": "Explore Dispensary Store",
+    "feeTag": "Standard Consultation ₹500",
+    "trustedTag": "5,000+ Chronic Patients Treated • 4.9★ Rated"
   },
 
   "about": {

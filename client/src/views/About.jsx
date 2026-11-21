@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FiCheckCircle,
   FiAward,
@@ -13,30 +14,40 @@ import {
 } from "react-icons/fi";
 import { FaUserMd, FaLeaf, FaHandsHelping, FaBalanceScale } from "react-icons/fa";
 
-const classicalPillars = [
-  {
-    icon: <FaLeaf className="text-emerald-500" />,
-    title: "100% Non-Toxic & Steroid Free",
-    desc: "Gentle natural micro-dilutions that trigger the body's self-healing vital force without liver strain, chemical dependency, or steroid rebound.",
-  },
-  {
-    icon: <FaBalanceScale className="text-indigo-500" />,
-    title: "Constitutional & Thermal Matching",
-    desc: "Treatment is personalized to your unique thermal affinity (hot/chilly), psychological temperament, food cravings, and family miasmatic history.",
-  },
-  {
-    icon: <FaHandsHelping className="text-purple-500" />,
-    title: "Root-Cause Eradication",
-    desc: "We don't simply mask skin eruptions with creams or quiet stomach burning with antacids. We resolve the internal disharmony to prevent relapse.",
-  },
-  {
-    icon: <FiShield className="text-amber-500" />,
-    title: "Safe for All Generations",
-    desc: "Sweet sugar globules loved by 2-year-old toddlers, safe for pregnant mothers, and completely gentle on geriatric elderly patients.",
-  },
-];
-
 const AboutSection = () => {
+  const { t, i18n } = useTranslation();
+  const isHi = i18n.language?.startsWith("hi");
+
+  const classicalPillars = [
+    {
+      icon: <FaLeaf className="text-emerald-500" />,
+      title: isHi ? "100% प्राकृतिक एवं स्टेरॉयड मुक्त" : "100% Non-Toxic & Steroid Free",
+      desc: isHi
+        ? "कोमल प्राकृतिक सूक्ष्म-डायल्यूशन जो बिना किसी केमिकल निर्भरता या साइड-इफेक्ट्स के शरीर की स्वयं-हीलिंग शक्ति को जगाती हैं।"
+        : "Gentle natural micro-dilutions that trigger the body's self-healing vital force without liver strain, chemical dependency, or steroid rebound.",
+    },
+    {
+      icon: <FaBalanceScale className="text-indigo-500" />,
+      title: isHi ? "व्यक्तिगत संवैधानिक मिलान" : "Constitutional & Thermal Matching",
+      desc: isHi
+        ? "उपचार आपकी शारीरिक प्रकृति (ठंड/गर्मी संवेदनशीलता), स्वभाव और पारिवारिक इतिहास के अनुसार अनुकूलित किया जाता है।"
+        : "Treatment is personalized to your unique thermal affinity (hot/chilly), psychological temperament, food cravings, and family miasmatic history.",
+    },
+    {
+      icon: <FaHandsHelping className="text-purple-500" />,
+      title: isHi ? "रोग का जड़ से उन्मूलन" : "Root-Cause Eradication",
+      desc: isHi
+        ? "हम सिर्फ मलहम से त्वचा के चकत्ते नहीं दबाते, बल्कि अंदरूनी संतुलन को ठीक करके बार-बार बीमारी लौटने से रोकते हैं।"
+        : "We don't simply mask skin eruptions with creams or quiet stomach burning with antacids. We resolve the internal disharmony to prevent relapse.",
+    },
+    {
+      icon: <FiShield className="text-amber-500" />,
+      title: isHi ? "सभी पीढ़ियों के लिए सुरक्षित" : "Safe for All Generations",
+      desc: isHi
+        ? "मीठी चीनी की गोलियां जो 2 साल के बच्चों से लेकर गर्भवती महिलाओं और बुजुर्गों तक सभी के लिए पूरी तरह सुरक्षित हैं।"
+        : "Sweet sugar globules loved by 2-year-old toddlers, safe for pregnant mothers, and completely gentle on geriatric elderly patients.",
+    },
+  ];
   return (
     <section
       id="about"
@@ -108,32 +119,44 @@ const AboutSection = () => {
             className="lg:col-span-7 space-y-6"
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-emerald-700 dark:text-emerald-300">
-              <FaUserMd /> Certified Doctor's Profile
+              <FaUserMd /> {isHi ? "प्रमाणित डॉक्टर प्रोफ़ाइल" : "Certified Doctor's Profile"}
             </div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
-              Dedicated to Restoring Health,{" "}
+              {isHi ? "स्वास्थ्य को पुनर्स्थापित करने के लिए समर्पित, " : "Dedicated to Restoring Health, "}
               <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Not Just Masking Symptoms.
+                {isHi ? "केवल लक्षणों को दबाने के लिए नहीं।" : "Not Just Masking Symptoms."}
               </span>
             </h2>
 
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
-              Dr. Rashi Shrivastava graduated with a Bachelor of Homeopathic Medicine and Surgery (BHMS). With rigorous training in classical repertorization and organon of medicine, she focuses on deep constitutional case evaluations.
+              {isHi
+                ? "डॉ. राशी श्रीवास्तव ने बीएचएमएस (बैचलर ऑफ होम्योपैथिक मेडिसिन एंड सर्जरी) से स्नातक किया है। क्लासिकल रिपर्टरी और ऑर्गनन ऑफ मेडिसिन के गहन प्रशिक्षण के साथ, वे प्रत्येक मरीज़ के संपूर्ण शारीरिक व मानसिक मूल्यांकन पर ध्यान केंद्रित करती हैं।"
+                : "Dr. Rashi Shrivastava graduated with a Bachelor of Homeopathic Medicine and Surgery (BHMS). With rigorous training in classical repertorization and organon of medicine, she focuses on deep constitutional case evaluations."}
             </p>
 
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
-              Her clinic has successfully managed over 5,000+ patient visits across Madhya Pradesh and across India via seamless high-definition tele-consultations. Every prescription is individually prepared with high-grade German and authentic Indian pharmacopeial dilutions.
+              {isHi
+                ? "उनके क्लिनिक ने मध्य प्रदेश और पूरे भारत में 5,000+ से अधिक मरीज़ों को डिजिटल टेली-कंसल्टेशन और क्लिनिक विज़िट्स के माध्यम से स्वस्थ किया है। हर नुस्खा प्रामाणिक जर्मन व भारतीय उच्च-पोटेंसी दवाओं से व्यक्तिगत रूप से तैयार किया जाता है।"
+                : "Her clinic has successfully managed over 5,000+ patient visits across Madhya Pradesh and across India via seamless high-definition tele-consultations. Every prescription is individually prepared with high-grade German and authentic Indian pharmacopeial dilutions."}
             </p>
 
             {/* Checklist */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              {[
-                "Certified BHMS Medical Practitioner",
-                "Deep Constitutional Case Repertorization",
-                "Pure High-Potency Homoeopathic Dilutions",
-                "Doorstep Dispensary Dispatch with Courier Tracking",
-              ].map((item, i) => (
+              {(isHi
+                ? [
+                    "प्रमाणित बीएचएमएस मेडिकल प्रैक्टिशनर",
+                    "गहन संवैधानिक केस रिपर्टराइजेशन",
+                    "शुद्ध उच्च-पोटेंसी होम्योपैथिक दवाएं",
+                    "कूरियर ट्रैकिंग के साथ होम डिलीवरी",
+                  ]
+                : [
+                    "Certified BHMS Medical Practitioner",
+                    "Deep Constitutional Case Repertorization",
+                    "Pure High-Potency Homoeopathic Dilutions",
+                    "Doorstep Dispensary Dispatch with Courier Tracking",
+                  ]
+              ).map((item, i) => (
                 <div key={i} className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200">
                   <FiCheckCircle className="text-emerald-500 shrink-0 text-base" />
                   <span>{item}</span>

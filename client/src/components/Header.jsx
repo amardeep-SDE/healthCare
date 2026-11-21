@@ -1,5 +1,6 @@
 // src/components/Header.jsx
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -47,7 +48,12 @@ const Header = () => {
     else document.body.classList.remove("overflow-hidden");
   }, [isMenuOpen]);
 
-  const switchLanguage = (lang) => i18n.changeLanguage(lang);
+  const switchLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+    try {
+      localStorage.setItem("i18nextLng", lang);
+    } catch (e) {}
+  };
 
   const navLinkStyle = (path) => {
     const isActive = location.pathname === path;
@@ -101,18 +107,15 @@ const Header = () => {
               </Link>
               <Link to="/doctor/dashboard" className={navLinkStyle("/doctor/dashboard")}>
                 <FaUserMd className="text-indigo-600 dark:text-indigo-400 text-xs" />
-                <span>Clinic Control</span>
+                <span>{t("nav.clinicControl") || "Clinic Control"}</span>
               </Link>
               <Link to="/doctor/patients" className={navLinkStyle("/doctor/patients")}>
                 <FiUsers className="text-indigo-600 dark:text-indigo-400 text-xs" />
-                <span>Patient EMR</span>
-                <span className="px-1.5 py-0.2 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold">
-                  Directory
-                </span>
+                <span>{t("nav.patientEMR") || "Patient EMR"}</span>
               </Link>
               <Link to="/doctor/orders" className={navLinkStyle("/doctor/orders")}>
                 <FaPills className="text-indigo-600 dark:text-indigo-400 text-xs" />
-                <span>Dispensary Dispatch</span>
+                <span>{t("nav.dispensaryDispatch") || "Dispensary Dispatch"}</span>
               </Link>
             </>
           ) : (
@@ -123,7 +126,7 @@ const Header = () => {
               </Link>
               <Link to="/appointment" className={navLinkStyle("/appointment")}>
                 <FiCalendar className="text-indigo-600 dark:text-indigo-400 text-xs" />
-                <span>Book Consult</span>
+                <span>{t("nav.bookConsult") || "Book Consult"}</span>
                 <span className="flex h-1.5 w-1.5 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
@@ -131,17 +134,17 @@ const Header = () => {
               </Link>
               <Link to="/medicines" className={navLinkStyle("/medicines")}>
                 <FaPills className="text-indigo-600 dark:text-indigo-400 text-xs" />
-                <span>Dispensary</span>
+                <span>{t("nav.dispensary") || "Dispensary"}</span>
               </Link>
               <Link to="/patient/dashboard" className={navLinkStyle("/patient/dashboard")}>
                 <FiActivity className="text-indigo-600 dark:text-indigo-400 text-xs" />
-                <span>Health Meter</span>
+                <span>{t("nav.healthMeter") || "Health Meter"}</span>
               </Link>
               <Link to="/patient/profile" className={navLinkStyle("/patient/profile")}>
-                <span>Medical Profile</span>
+                <span>{t("nav.medicalProfile") || "Medical Profile"}</span>
               </Link>
               <Link to="/my-appointments" className={navLinkStyle("/my-appointments")}>
-                <span>My Visits</span>
+                <span>{t("nav.myVisits") || "My Visits"}</span>
               </Link>
             </>
           )}
@@ -161,7 +164,7 @@ const Header = () => {
             }`}
           >
             <FiRefreshCw className="text-[11px]" />
-            <span>Mode: {isDoc ? "Dr. Rashi (Super Admin)" : "Patient (Ananya)"}</span>
+            <span>Mode: {isDoc ? (t("nav.modeDoctor") || "Dr. Rashi") : (t("nav.modePatient") || "Patient")}</span>
           </button>
 
           {/* Dispensary Cart Drawer Trigger */}
@@ -187,7 +190,7 @@ const Header = () => {
             <button
               onClick={() => switchLanguage("en")}
               className={`transition ${
-                i18n.language === "en" ? "text-indigo-600 font-extrabold" : "text-gray-400 hover:text-gray-600"
+                i18n.language?.startsWith("en") ? "text-indigo-600 font-extrabold" : "text-gray-400 hover:text-gray-600"
               }`}
             >
               EN
@@ -196,7 +199,7 @@ const Header = () => {
             <button
               onClick={() => switchLanguage("hi")}
               className={`transition ${
-                i18n.language === "hi" ? "text-indigo-600 font-extrabold" : "text-gray-400 hover:text-gray-600"
+                i18n.language?.startsWith("hi") ? "text-indigo-600 font-extrabold" : "text-gray-400 hover:text-gray-600"
               }`}
             >
               हिन्दी
@@ -251,7 +254,7 @@ const Header = () => {
             )}
           </button>
           <button
-            className="p-2 rounded-xl text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-slate-800"
+            className="p-2 rounded-xl text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-slate-800 transition"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Open Navigation Menu"
           >
@@ -261,168 +264,190 @@ const Header = () => {
 
       </header>
 
-      {/* 5. Mobile Slide-Over Drawer */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "tween", duration: 0.25 }}
-            className="lg:hidden fixed inset-0 bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl flex flex-col p-6 space-y-6 text-gray-900 dark:text-white z-50 overflow-y-auto"
-          >
-            {/* Drawer Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-slate-800">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-sm">
-                  DR
-                </div>
-                <div>
-                  <span className="font-bold text-sm block">Dr. Rashi Homeopathy</span>
-                  <span className="text-[10px] text-gray-500">BHMS Certified Clinic</span>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800"
-              >
-                <AiOutlineClose size={24} />
-              </button>
-            </div>
+      {/* 5. Mobile Slide-Over Drawer using Portal to prevent backdrop-blur containment */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {isMenuOpen && (
+              <div className="fixed inset-0 z-[99999] lg:hidden">
+                {/* Backdrop overlay */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+                />
 
-            {/* Current Active Mode Banner */}
-            <div className="p-4 rounded-2xl bg-indigo-50 dark:bg-slate-800 border border-indigo-100 dark:border-slate-700 flex items-center justify-between">
-              <div>
-                <span className="text-xs text-gray-500 dark:text-gray-400 block font-medium">Logged in Mode:</span>
-                <span className="text-sm font-bold text-indigo-700 dark:text-indigo-300">
-                  {isDoc ? "🩺 Dr. Rashi (Super Admin)" : "👤 Patient (Ananya Sharma)"}
-                </span>
-              </div>
-              <button
-                onClick={() => {
-                  switchRole(isDoc ? "patient" : "doctor");
-                  setIsMenuOpen(false);
-                }}
-                className="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-600 text-white shadow-xs"
-              >
-                Switch Role
-              </button>
-            </div>
-
-            {/* Mobile Nav Links */}
-            <div className="flex flex-col space-y-3 font-semibold text-sm">
-              {isDoc ? (
-                <>
-                  <Link
-                    to="/"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800"
-                  >
-                    Home (Doctor Portfolio)
-                  </Link>
-                  <Link
-                    to="/doctor/dashboard"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2 text-indigo-600 dark:text-indigo-400"
-                  >
-                    <FaUserMd /> Clinic Control
-                  </Link>
-                  <Link
-                    to="/doctor/patients"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2"
-                  >
-                    <FiUsers /> Patient Directory (1,000+ EMR)
-                  </Link>
-                  <Link
-                    to="/doctor/orders"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2"
-                  >
-                    <FaPills /> Dispensary Dispatch
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/appointment"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 flex items-center justify-between"
-                  >
-                    <span>Book Consultation</span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white">
-                      ₹500 Slot
-                    </span>
-                  </Link>
-                  <Link
-                    to="/medicines"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800"
-                  >
-                    Dispensary Store
-                  </Link>
-                  <Link
-                    to="/patient/dashboard"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800"
-                  >
-                    Patient Health Meter
-                  </Link>
-                  <Link
-                    to="/patient/profile"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800"
-                  >
-                    Medical Profile & Locker
-                  </Link>
-                  <Link
-                    to="/my-appointments"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800"
-                  >
-                    My Appointments
-                  </Link>
-                  <Link
-                    to="/orders"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800"
-                  >
-                    Track Orders
-                  </Link>
-                </>
-              )}
-            </div>
-
-            {/* Footer inside drawer */}
-            <div className="pt-6 border-t border-gray-100 dark:border-slate-800 flex items-center justify-between mt-auto">
-              <ThemeToggle />
-              <div className="flex gap-2 text-sm font-semibold">
-                <button
-                  onClick={() => switchLanguage("en")}
-                  className={i18n.language === "en" ? "font-bold text-indigo-600" : ""}
+                {/* Slide Drawer */}
+                <motion.div
+                  initial={{ x: "100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: "100%" }}
+                  transition={{ type: "spring", damping: 25, stiffness: 250 }}
+                  className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-white dark:bg-slate-900 shadow-2xl flex flex-col p-6 space-y-6 text-gray-900 dark:text-white overflow-y-auto"
                 >
-                  English
-                </button>
-                <span>|</span>
-                <button
-                  onClick={() => switchLanguage("hi")}
-                  className={i18n.language === "hi" ? "font-bold text-indigo-600" : ""}
-                >
-                  हिन्दी
-                </button>
-              </div>
-            </div>
+                  {/* Drawer Header */}
+                  <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-slate-800">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow">
+                        DR
+                      </div>
+                      <div>
+                        <span className="font-bold text-sm block">Dr. Rashi Homeopathy</span>
+                        <span className="text-[10px] text-gray-500 dark:text-gray-400">BHMS Certified Clinic</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setIsMenuOpen(false)}
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300 transition"
+                      aria-label="Close navigation menu"
+                    >
+                      <AiOutlineClose size={22} />
+                    </button>
+                  </div>
 
-          </motion.div>
+                  {/* Current Active Mode Banner */}
+                  <div className="p-4 rounded-2xl bg-indigo-50 dark:bg-slate-800 border border-indigo-100 dark:border-slate-700 flex items-center justify-between">
+                    <div>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 block font-medium">Logged in Mode:</span>
+                      <span className="text-sm font-bold text-indigo-700 dark:text-indigo-300">
+                        {isDoc ? `🩺 ${t("nav.modeDoctor") || "Dr. Rashi"}` : `👤 ${t("nav.modePatient") || "Patient"}`}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        switchRole(isDoc ? "patient" : "doctor");
+                        setIsMenuOpen(false);
+                      }}
+                      className="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-600 text-white shadow-xs hover:bg-indigo-700 transition"
+                    >
+                      {t("nav.switchRole") || "Switch Role"}
+                    </button>
+                  </div>
+
+                  {/* Mobile Nav Links */}
+                  <div className="flex flex-col space-y-2 font-semibold text-sm">
+                    {isDoc ? (
+                      <>
+                        <Link
+                          to="/"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          {t("nav.home") || "Home"}
+                        </Link>
+                        <Link
+                          to="/doctor/dashboard"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 text-indigo-600 dark:text-indigo-400 transition"
+                        >
+                          <FaUserMd /> {t("nav.clinicControl") || "Clinic Control"}
+                        </Link>
+                        <Link
+                          to="/doctor/patients"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          <FiUsers /> {t("nav.patientEMR") || "Patient EMR"}
+                        </Link>
+                        <Link
+                          to="/doctor/orders"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          <FaPills /> {t("nav.dispensaryDispatch") || "Dispensary Dispatch"}
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          {t("nav.home") || "Home"}
+                        </Link>
+                        <Link
+                          to="/appointment"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 flex items-center justify-between transition"
+                        >
+                          <span className="flex items-center gap-2.5">
+                            <FiCalendar /> {t("nav.bookConsult") || "Book Consult"}
+                          </span>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white">
+                            ₹500
+                          </span>
+                        </Link>
+                        <Link
+                          to="/medicines"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          <FaPills /> {t("nav.dispensary") || "Dispensary"}
+                        </Link>
+                        <Link
+                          to="/patient/dashboard"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          <FiActivity /> {t("nav.healthMeter") || "Health Meter"}
+                        </Link>
+                        <Link
+                          to="/patient/profile"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          <FiUser /> {t("nav.medicalProfile") || "Medical Profile"}
+                        </Link>
+                        <Link
+                          to="/my-appointments"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          <FiCalendar /> {t("nav.myVisits") || "My Visits"}
+                        </Link>
+                        <Link
+                          to="/orders"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2.5 transition"
+                        >
+                          <FiPackage /> {t("nav.trackOrders") || "Track Orders"}
+                        </Link>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Footer inside drawer */}
+                  <div className="pt-6 border-t border-gray-100 dark:border-slate-800 flex items-center justify-between mt-auto">
+                    <ThemeToggle />
+                    <div className="flex items-center gap-1.5 text-xs font-semibold">
+                      <button
+                        onClick={() => switchLanguage("en")}
+                        className={`px-3 py-1.5 rounded-lg transition ${
+                          i18n.language?.startsWith("en") ? "bg-indigo-600 text-white font-bold shadow-xs" : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                        }`}
+                      >
+                        English
+                      </button>
+                      <span className="text-gray-300 dark:text-gray-600">|</span>
+                      <button
+                        onClick={() => switchLanguage("hi")}
+                        className={`px-3 py-1.5 rounded-lg transition ${
+                          i18n.language?.startsWith("hi") ? "bg-indigo-600 text-white font-bold shadow-xs" : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                        }`}
+                      >
+                        हिन्दी
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
 
     </section>
   );

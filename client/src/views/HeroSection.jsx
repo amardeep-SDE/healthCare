@@ -19,7 +19,16 @@ import { FaUserMd, FaPills, FaLeaf, FaHeartbeat } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 const HeroSection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const typewriterWords = Array.isArray(t("hero.typewriter", { returnObjects: true }))
+    ? t("hero.typewriter", { returnObjects: true })
+    : [
+        "Dr. Rashi Shrivastava",
+        "Classical Homeopathy",
+        "Zero Side-Effects",
+        "Constitutional Care",
+      ];
 
   return (
     <section
@@ -50,28 +59,24 @@ const HeroSection = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>Dr. Rashi Shrivastava • BHMS Certified Classical Homeopath</span>
+              <span>{t("hero.badge") || "Dr. Rashi Shrivastava • BHMS Certified Classical Homeopath"}</span>
               <span className="hidden sm:inline-block text-gray-300 dark:text-gray-600">|</span>
               <span className="hidden sm:inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
-                <FiCheckCircle size={13} /> Verified Clinic
+                <FiCheckCircle size={13} /> {t("hero.verified") || "Verified Clinic"}
               </span>
             </motion.div>
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-950 dark:text-white leading-[1.15] tracking-tight">
-              Gentle Root-Cause{" "}
+              {t("hero.headline1") || "Gentle Root-Cause"}{" "}
               <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 bg-clip-text text-transparent dark:from-indigo-400 dark:via-purple-300 dark:to-indigo-300">
-                Healing With
+                {t("hero.headlineHighlight") || "Healing With"}
               </span>{" "}
               <br className="hidden sm:inline" />
               <span className="text-indigo-600 dark:text-indigo-400 font-serif italic">
                 <Typewriter
-                  words={[
-                    "Dr. Rashi Shrivastava",
-                    "Classical Homeopathy",
-                    "Zero Side-Effects",
-                    "Constitutional Care",
-                  ]}
+                  key={i18n.language}
+                  words={typewriterWords}
                   loop
                   cursor
                   cursorStyle="|"
@@ -84,19 +89,20 @@ const HeroSection = () => {
 
             {/* Subtitle */}
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed">
-              Specialized in chronic skin disorders (eczema & psoriasis), stubborn hair fall, gastric acidity, and women's hormonal balance. Treat the root cause with individual constitutional micro-potencies—not temporary steroid suppression.
+              {t("hero.description") ||
+                "Specialized in chronic skin disorders (eczema & psoriasis), stubborn hair fall, gastric acidity, and women's hormonal balance. Treat the root cause with individual constitutional micro-potencies—not temporary steroid suppression."}
             </p>
 
             {/* Quick Consultation Badges */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 py-1">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-900 text-xs font-medium text-indigo-800 dark:text-indigo-200">
-                <FiVideo className="text-indigo-600 dark:text-indigo-400" /> Pan-India Video Consult
+                <FiVideo className="text-indigo-600 dark:text-indigo-400" /> {t("hero.videoConsult") || "Pan-India Video Consult"}
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900 text-xs font-medium text-emerald-800 dark:text-emerald-200">
-                <FiMapPin className="text-emerald-600 dark:text-emerald-400" /> In-Clinic Visit (Indore/Bhopal)
+                <FiMapPin className="text-emerald-600 dark:text-emerald-400" /> {t("hero.inClinic") || "In-Clinic Visit (Indore/Bhopal)"}
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-100 dark:border-amber-900 text-xs font-medium text-amber-800 dark:text-amber-200">
-                <FaLeaf className="text-amber-600 dark:text-amber-400" /> 100% Non-Toxic & Steroid Free
+                <FaLeaf className="text-amber-600 dark:text-amber-400" /> {t("hero.nonToxic") || "100% Non-Toxic & Steroid Free"}
               </span>
             </div>
 
@@ -107,7 +113,7 @@ const HeroSection = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-xl shadow-indigo-500/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <FiCalendar className="text-lg" />
-                <span>Book Consultation (₹500)</span>
+                <span>{t("hero.bookBtn") || "Book Video Consultation"} (₹500)</span>
                 <FiArrowUpRight className="text-lg" />
               </Link>
 
@@ -116,7 +122,7 @@ const HeroSection = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-800 dark:text-gray-200 font-semibold text-sm border border-gray-200 dark:border-slate-700 shadow-sm transition hover:scale-[1.02] active:scale-[0.98]"
               >
                 <FaPills className="text-indigo-600 dark:text-indigo-400" />
-                <span>Dispensary & Care Kits</span>
+                <span>{t("hero.exploreBtn") || "Dispensary & Care Kits"}</span>
                 <FiArrowRight />
               </Link>
             </div>

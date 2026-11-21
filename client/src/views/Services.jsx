@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FiArrowRight,
   FiCheck,
@@ -104,6 +105,8 @@ const clinicalTreatments = [
 
 const Services = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const { t, i18n } = useTranslation();
+  const isHi = i18n.language?.startsWith("hi");
 
   return (
     <section
@@ -118,16 +121,18 @@ const Services = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-xs font-bold text-indigo-700 dark:text-indigo-300">
-            <FaLeaf /> Clinical Expertise & Specializations
+            <FaLeaf /> {isHi ? "क्लिनिकल विशेषज्ञता एवं उपचार" : "Clinical Expertise & Specializations"}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            Comprehensive Care for{" "}
+            {isHi ? "पुरानी व गंभीर बीमारियों के लिए " : "Comprehensive Care for "}
             <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Chronic & Recurrent Health
+              {isHi ? "संपूर्ण प्राकृतिक देखभाल" : "Chronic & Recurrent Health"}
             </span>
           </h2>
           <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
-            Dr. Rashi Shrivastava evaluates your complete constitutional case—mental disposition, thermal affinity, and physical miasms—to prescribe targeted natural remedies.
+            {isHi
+              ? "डॉ. राशी श्रीवास्तव आपके संपूर्ण संवैधानिक केस (मानसिक प्रकृति, थर्मल संवेदनशीलता और शारीरिक लक्षणों) का अध्ययन करके सटीक प्राकृतिक दवाएं निर्धारित करती हैं।"
+              : "Dr. Rashi Shrivastava evaluates your complete constitutional case—mental disposition, thermal affinity, and physical miasms—to prescribe targeted natural remedies."}
           </p>
         </div>
 
