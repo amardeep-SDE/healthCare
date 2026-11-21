@@ -216,7 +216,7 @@ const Header = () => {
               <img
                 src={
                   isDoc
-                    ? "https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=200&q=80"
+                    ? "/doctor-rashi.jpg"
                     : user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
                 }
                 alt={user?.name || "Active User"}

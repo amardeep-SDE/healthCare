@@ -22,84 +22,90 @@ import {
 } from "react-icons/fa";
 import { RiMedicineBottleLine } from "react-icons/ri";
 
-const clinicalTreatments = [
+const getClinicalTreatments = (isHi) => [
   {
     id: "skin",
-    concernName: "Skin & Atopic Eczema",
-    title: "Chronic Skin, Eczema & Psoriasis",
+    concernName: isHi ? "त्वचा एवं एक्जिमा" : "Skin & Atopic Eczema",
+    title: isHi ? "पुराने त्वचा रोग, एक्जिमा और सोरायसिस" : "Chronic Skin, Eczema & Psoriasis",
     icon: <FaHeartbeat className="text-rose-500" />,
-    badge: "Most Consulted",
+    badge: isHi ? "सर्वाधिक परामर्शित" : "Most Consulted",
     badgeColor: "bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border-rose-200 dark:border-rose-800",
-    description:
-      "Permanent relief from dry itchy patches, lichenification, recurring urticaria, and contact dermatitis without steroid side-effects.",
-    reliefTimeline: "3 to 6 Weeks avg. relief",
+    description: isHi
+      ? "स्टेरॉयड के बिना सूखी खुजली, पित्ती (अर्टिकेरिया) और एलर्जिक डर्मेटाइटिस से स्थायी और प्राकृतिक राहत।"
+      : "Permanent relief from dry itchy patches, lichenification, recurring urticaria, and contact dermatitis without steroid side-effects.",
+    reliefTimeline: isHi ? "3 से 6 सप्ताह में औसत राहत" : "3 to 6 Weeks avg. relief",
     topRemedies: ["Graphites 200CH", "Sulphur 30C", "Calendula Q"],
-    symptomsCovered: ["Nighttime Itching", "Red Flaky Patches", "Dry Flare-ups"],
+    symptomsCovered: isHi ? ["रात में तेज खुजली", "लाल पपड़ीदार चकत्ते", "सूखी त्वचा"] : ["Nighttime Itching", "Red Flaky Patches", "Dry Flare-ups"],
   },
   {
     id: "hair",
-    concernName: "Hair Fall & Scalp Health",
-    title: "Hair Fall, Alopecia & Scalp Care",
+    concernName: isHi ? "बाल झड़ना एवं स्कैल्प" : "Hair Fall & Scalp Health",
+    title: isHi ? "बाल झड़ना, एलोपेसिया और डैंड्रफ" : "Hair Fall, Alopecia & Scalp Care",
     icon: <FaSpa className="text-amber-500" />,
-    badge: "High Recovery",
+    badge: isHi ? "उत्कृष्ट परिणाम" : "High Recovery",
     badgeColor: "bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-800",
-    description:
-      "Nutritive hair follicle rejuvenation tackling stress-induced alopecia areata, post-fever hair thinning, and recurrent stubborn dandruff.",
-    reliefTimeline: "4 to 8 Weeks root regrowth",
+    description: isHi
+      ? "तनाव या बीमारी के बाद बाल पतले होने, एलोपेसिया एरीटा और जिद्दी रूसी का प्राकृतिक उपचार।"
+      : "Nutritive hair follicle rejuvenation tackling stress-induced alopecia areata, post-fever hair thinning, and recurrent stubborn dandruff.",
+    reliefTimeline: isHi ? "4 से 8 सप्ताह में नए बाल" : "4 to 8 Weeks root regrowth",
     topRemedies: ["Wiesbaden 200CH", "Arnica & Jaborandi Q", "Bio-28"],
-    symptomsCovered: ["Excessive Hair Fall", "Thinning Crown", "Scalp Dryness"],
+    symptomsCovered: isHi ? ["अत्यधिक बाल झड़ना", "बालों का पतला होना", "स्कैल्प में सूखापन"] : ["Excessive Hair Fall", "Thinning Crown", "Scalp Dryness"],
   },
   {
     id: "gastric",
-    concernName: "Gastric & Digestive",
-    title: "Acidity, GERD & Digestive Health",
+    concernName: isHi ? "पाचन एवं एसिडिटी" : "Gastric & Digestive",
+    title: isHi ? "एसिडिटी, जीईआरडी और पाचन समस्याएं" : "Acidity, GERD & Digestive Health",
     icon: <RiMedicineBottleLine className="text-indigo-500" />,
-    badge: "Fast Acting",
+    badge: isHi ? "त्वरित राहत" : "Fast Acting",
     badgeColor: "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800",
-    description:
-      "Gentle digestive harmony to eliminate reliance on daily antacids, post-heavy-meal bloating, acid reflux, chronic constipation, and IBS.",
-    reliefTimeline: "7 to 14 Days noticeable ease",
+    description: isHi
+      ? "दैनिक एंटासिड पर निर्भरता, भोजन के बाद पेट फूलना, एसिड रिफ्लक्स और पुरानी कब्ज से कोमल मुक्ति।"
+      : "Gentle digestive harmony to eliminate reliance on daily antacids, post-heavy-meal bloating, acid reflux, chronic constipation, and IBS.",
+    reliefTimeline: isHi ? "7 से 14 दिनों में स्पष्ट आराम" : "7 to 14 Days noticeable ease",
     topRemedies: ["Nux Vomica 30C", "Carbo Veg 200CH", "Lycopodium"],
-    symptomsCovered: ["Heartburn / Reflux", "Bloating & Gas", "Sluggish Digestion"],
+    symptomsCovered: isHi ? ["सीने में जलन / खट्टी डकार", "पेट फूलना व गैस", "कमजोर पाचन"] : ["Heartburn / Reflux", "Bloating & Gas", "Sluggish Digestion"],
   },
   {
     id: "women",
-    concernName: "PCOD & Hormonal Health",
-    title: "PCOD, PCOS & Hormonal Balance",
+    concernName: isHi ? "PCOD एवं महिला स्वास्थ्य" : "PCOD & Hormonal Health",
+    title: isHi ? "PCOD, PCOS एवं हार्मोनल असंतुलन" : "PCOD, PCOS & Hormonal Balance",
     icon: <FaFemale className="text-purple-500" />,
-    badge: "Natural Cycle",
+    badge: isHi ? "प्राकृतिक चक्र" : "Natural Cycle",
     badgeColor: "bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border-purple-200 dark:border-purple-800",
-    description:
-      "Constitutional ovarian stimulation restoring natural regular cycles, reversing hormonal cystic acne, and stabilizing weight.",
-    reliefTimeline: "2 to 3 Cycles normalization",
+    description: isHi
+      ? "मासिक चक्र को स्वाभाविक रूप से नियमित करना, हार्मोनल मुंहासे (एक्ने) और वजन को संतुलित करना।"
+      : "Constitutional ovarian stimulation restoring natural regular cycles, reversing hormonal cystic acne, and stabilizing weight.",
+    reliefTimeline: isHi ? "2 से 3 चक्रों में सामान्यीकरण" : "2 to 3 Cycles normalization",
     topRemedies: ["Pulsatilla 200CH", "Sepia 30C", "Calcarea Carb"],
-    symptomsCovered: ["Delayed Cycles", "Hormonal Jawline Acne", "Mood Swings"],
+    symptomsCovered: isHi ? ["अनियमित मासिक चक्र", "हार्मोनल मुंहासे", "मूड स्विंग्स"] : ["Delayed Cycles", "Hormonal Jawline Acne", "Mood Swings"],
   },
   {
     id: "pediatric",
-    concernName: "Pediatric Immunity",
-    title: "Child Immunity & Recurrent Allergies",
+    concernName: isHi ? "शिशु एवं बाल स्वास्थ्य" : "Pediatric Immunity",
+    title: isHi ? "बच्चों की इम्युनिटी एवं बार-बार एलर्जी" : "Child Immunity & Recurrent Allergies",
     icon: <FaBaby className="text-emerald-500" />,
-    badge: "Sweet Pills • 100% Safe",
+    badge: isHi ? "मीठी गोलियां • 100% सुरक्षित" : "Sweet Pills • 100% Safe",
     badgeColor: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800",
-    description:
-      "Sweet sugar globules that children love! Builds deep natural immunity against recurrent seasonal flu, adenoids, tonsillitis, and wheezing.",
-    reliefTimeline: "Continuous seasonal shielding",
+    description: isHi
+      ? "मीठी चीनी की गोलियां जो बच्चे खुशी से खाते हैं! मौसम बदलते ही सर्दी-जुकाम, टॉन्सिल और सांस फूलने से सुरक्षा।"
+      : "Sweet sugar globules that children love! Builds deep natural immunity against recurrent seasonal flu, adenoids, tonsillitis, and wheezing.",
+    reliefTimeline: isHi ? "मौसम भर प्राकृतिक सुरक्षा कवच" : "Continuous seasonal shielding",
     topRemedies: ["Tuberculinum 200", "Calc Phos 6X", "Aconite 30"],
-    symptomsCovered: ["Weather Change Fevers", "Frequent Cough", "Low Appetite"],
+    symptomsCovered: isHi ? ["मौसम बदलते ही बुखार", "बार-बार खांसी", "कम भूख लगना"] : ["Weather Change Fevers", "Frequent Cough", "Low Appetite"],
   },
   {
     id: "stress",
-    concernName: "Stress & Sleep",
-    title: "Migraine, Sleep & Stress Relief",
+    concernName: isHi ? "तनाव, सिरदर्द एवं अनिद्रा" : "Stress & Sleep",
+    title: isHi ? "माइग्रेन, नींद न आना एवं मानसिक तनाव" : "Migraine, Sleep & Stress Relief",
     icon: <FaBrain className="text-cyan-500" />,
-    badge: "Non-Sedative",
+    badge: isHi ? "नशे की लत रहित" : "Non-Sedative",
     badgeColor: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950/60 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800",
-    description:
-      "Restores restful deep REM sleep and relieves debilitating one-sided migraines and chronic mental fatigue without chemical addiction.",
-    reliefTimeline: "Immediate calming within days",
+    description: isHi
+      ? "गहरी आरामदायक नींद बहाल करना, एकतरफा तेज माइग्रेन और मानसिक थकान को बिना किसी केमिकल लत के दूर करना।"
+      : "Restores restful deep REM sleep and relieves debilitating one-sided migraines and chronic mental fatigue without chemical addiction.",
+    reliefTimeline: isHi ? "कुछ ही दिनों में शांति और आराम" : "Immediate calming within days",
     topRemedies: ["Passiflora Q", "Coffea Cruda 200CH", "Kali Phos 6X"],
-    symptomsCovered: ["Throbbing Headache", "Broken Sleep", "Work Burnout"],
+    symptomsCovered: isHi ? ["तेज टीस वाला सिरदर्द", "टूटी-फूटी नींद", "कार्य का तनाव"] : ["Throbbing Headache", "Broken Sleep", "Work Burnout"],
   },
 ];
 
@@ -138,7 +144,7 @@ const Services = () => {
 
         {/* Treatment Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {clinicalTreatments.map((treatment, idx) => (
+          {getClinicalTreatments(isHi).map((treatment, idx) => (
             <motion.div
               key={treatment.id}
               initial={{ opacity: 0, y: 30 }}
@@ -171,7 +177,7 @@ const Services = () => {
                 {/* Symptoms Covered Tags */}
                 <div className="mb-5 space-y-1.5">
                   <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block">
-                    Key Indicators:
+                    {isHi ? "प्रमुख संकेत / लक्षण:" : "Key Indicators:"}
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {treatment.symptomsCovered.map((symptom, sIdx) => (
@@ -197,7 +203,7 @@ const Services = () => {
                 to={`/appointment?concern=${encodeURIComponent(treatment.concernName)}`}
                 className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-indigo-600/10 hover:bg-indigo-600 text-indigo-700 dark:text-indigo-300 hover:text-white font-bold text-xs transition duration-200"
               >
-                <span>Consult for {treatment.concernName}</span>
+                <span>{isHi ? `${treatment.concernName} के लिए परामर्श लें` : `Consult for ${treatment.concernName}`}</span>
                 <FiArrowRight />
               </Link>
             </motion.div>
@@ -207,16 +213,22 @@ const Services = () => {
         {/* Bottom Banner */}
         <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-indigo-800/50">
           <div className="space-y-2 text-center md:text-left">
-            <h4 className="text-lg font-bold">Unsure which constitutional category fits your symptoms?</h4>
+            <h4 className="text-lg font-bold">
+              {isHi
+                ? "समझ नहीं आ रहा कि कौन सा उपचार आपके लक्षणों के अनुकूल है?"
+                : "Unsure which constitutional category fits your symptoms?"}
+            </h4>
             <p className="text-xs sm:text-sm text-indigo-200 max-w-xl">
-              Book a holistic 30-minute case interview. Dr. Rashi will analyze your complete physical vitals and medical reports.
+              {isHi
+                ? "30 मिनट का समग्र केस मूल्यांकन साक्षात्कार बुक करें। डॉ. राशी आपकी संपूर्ण शारीरिक रिपोर्ट व लक्षणों का अध्ययन करेंगी।"
+                : "Book a holistic 30-minute case interview. Dr. Rashi will analyze your complete physical vitals and medical reports."}
             </p>
           </div>
           <Link
             to="/appointment"
             className="shrink-0 px-6 py-3 rounded-2xl bg-white text-indigo-900 hover:bg-indigo-50 font-bold text-xs sm:text-sm shadow-md transition hover:scale-105"
           >
-            Schedule Intake Call →
+            {isHi ? "परामर्श सत्र शेड्यूल करें →" : "Schedule Intake Call →"}
           </Link>
         </div>
       </div>

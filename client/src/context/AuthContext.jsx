@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
         role: "doctor",
         qualification: "BHMS (Gold Medalist)",
         regNo: "CCH / MP-H-2020-84912",
-        avatar: "https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=200&q=80",
+        avatar: "/doctor-rashi.jpg",
       });
     } else {
       setUser({

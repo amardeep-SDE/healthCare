@@ -263,7 +263,7 @@ export const ConsultationRoom = () => {
               src={
                 isDoc
                   ? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80" // Patient (Ananya)
-                  : "https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=1200&q=80" // Doctor (Dr. Rashi)
+                  : "/doctor-rashi.jpg" // Doctor (Dr. Rashi)
               }
               alt="Live Video Feed"
               className="w-full h-full object-cover opacity-90"
@@ -283,7 +283,7 @@ export const ConsultationRoom = () => {
                 <img
                   src={
                     isDoc
-                      ? "https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=400&q=80"
+                      ? "/doctor-rashi.jpg"
                       : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
                   }
                   alt="Self Camera Preview"

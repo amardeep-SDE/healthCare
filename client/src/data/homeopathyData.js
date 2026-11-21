@@ -13,7 +13,7 @@ export const DOCTOR_INFO = {
   phone: "+91 98765 43210",
   whatsapp: "+91 98765 43210",
   email: "dr.rashi.homeopathy@gmail.com",
-  avatar: "https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=600&q=80",
+  avatar: "/doctor-rashi.jpg",
   stats: {
     patientsCured: "2,400+",
     successRate: "94%",

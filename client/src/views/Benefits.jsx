@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FiCalendar,
   FiFileText,
@@ -13,67 +14,81 @@ import {
 } from "react-icons/fi";
 import { FaUserMd, FaQuoteLeft } from "react-icons/fa";
 
-const treatmentSteps = [
+const getTreatmentSteps = (isHi) => [
   {
     step: "01",
-    title: "Book & Digital Intake",
-    desc: "Choose an online video slot or physical visit. Upload your existing blood tests, prescription slips, or skin photos via our encrypted health locker.",
+    title: isHi ? "अपॉइंटमेंट बुकिंग एवं डिजिटल रिपोर्ट" : "Book & Digital Intake",
+    desc: isHi
+      ? "ऑनलाइन वीडियो स्लॉट या क्लिनिक विज़िट चुनें। अपने मौजूदा ब्लड टेस्ट, पुरानी पर्चियां या त्वचा की तस्वीरें हमारे एन्क्रिप्टेड पोर्टल पर अपलोड करें।"
+      : "Choose an online video slot or physical visit. Upload your existing blood tests, prescription slips, or skin photos via our encrypted health locker.",
     icon: <FiCalendar className="text-indigo-600 dark:text-indigo-400" />,
   },
   {
     step: "02",
-    title: "30-Min In-Depth Diagnosis",
-    desc: "Dr. Rashi analyzes your constitutional traits, thermal preference (chilly/hot), food cravings, and psychological stressors to find the simillimum.",
+    title: isHi ? "30 मिनट का गहन केस मूल्यांकन" : "30-Min In-Depth Diagnosis",
+    desc: isHi
+      ? "डॉ. राशी आपके शारीरिक लक्षण, थर्मल संवेदनशीलता (ठंड/गर्मी), स्वभाव और तनाव का विश्लेषण करके सटीक सिमिलिमम का चुनाव करती हैं।"
+      : "Dr. Rashi analyzes your constitutional traits, thermal preference (chilly/hot), food cravings, and psychological stressors to find the simillimum.",
     icon: <FaUserMd className="text-purple-600 dark:text-purple-400" />,
   },
   {
     step: "03",
-    title: "Dispensary Dispatch & Live Tracking",
-    desc: "Original homeopathic medicated globules shipped to your address with BlueDart tracking. Log your daily symptom recovery (1-10) in the Patient Portal.",
+    title: isHi ? "दवा डिस्पैच एवं लाइव ट्रैकिंग" : "Dispensary Dispatch & Live Tracking",
+    desc: isHi
+      ? "प्रामाणिक होम्योपैथिक दवाएं ब्लू डार्ट कूरियर ट्रैकिंग के साथ सीधे आपके पते पर भेजी जाती हैं। पेशेंट पोर्टल में अपनी रिकवरी दर्ज करें।"
+      : "Original homeopathic medicated globules shipped to your address with BlueDart tracking. Log your daily symptom recovery (1-10) in the Patient Portal.",
     icon: <FiTruck className="text-emerald-600 dark:text-emerald-400" />,
   },
 ];
 
-const patientTransformations = [
+const getPatientTransformations = (isHi) => [
   {
-    name: "Ananya Sharma",
+    name: isHi ? "अनन्या शर्मा" : "Ananya Sharma",
     age: 26,
-    location: "Bhopal, MP",
-    condition: "Atopic Eczema & Sensitive Skin",
-    improvement: "70% in 4 Weeks",
-    duration: "Active Care",
+    location: isHi ? "भोपाल, मध्य प्रदेश" : "Bhopal, MP",
+    condition: isHi ? "एटोपिक एक्जिमा एवं संवेदनशील त्वचा" : "Atopic Eczema & Sensitive Skin",
+    improvement: isHi ? "4 सप्ताह में 70% राहत" : "70% in 4 Weeks",
+    duration: isHi ? "सक्रिय उपचार" : "Active Care",
     remedy: "Graphites 200CH + Calendula",
-    quote:
-      "I suffered from severe dry redness and nighttime itching on my elbows for 2 years. Allopathic steroid creams kept causing rebound flares. Within 3 weeks of Dr. Rashi's constitutional doses, my skin softened completely and sleep is back!",
+    quote: isHi
+      ? "मुझे 2 साल से कोहनी और गर्दन पर तेज लाल चकत्ते और खुजली थी। स्टेरॉयड क्रीम से सिर्फ तात्कालिक असर होता था। डॉ. राशी की दवाओं के 3 सप्ताह में मेरी त्वचा पूरी तरह शांत हो गई और नींद वापस आ गई!"
+      : "I suffered from severe dry redness and nighttime itching on my elbows for 2 years. Allopathic steroid creams kept causing rebound flares. Within 3 weeks of Dr. Rashi's constitutional doses, my skin softened completely and sleep is back!",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
   },
   {
-    name: "Rajesh Mehra",
+    name: isHi ? "राजेश मेहरा" : "Rajesh Mehra",
     age: 42,
-    location: "Indore, MP",
-    condition: "Chronic Acidity & GERD",
-    improvement: "85% in 3 Weeks",
-    duration: "Completed",
+    location: isHi ? "इंदौर, मध्य प्रदेश" : "Indore, MP",
+    condition: isHi ? "पुरानी एसिडिटी और सीने में जलन (GERD)" : "Chronic Acidity & GERD",
+    improvement: isHi ? "3 सप्ताह में 85% सुधार" : "85% in 3 Weeks",
+    duration: isHi ? "सफलतापूर्वक पूर्ण" : "Completed",
     remedy: "Nux Vomica 30C + Carbo Veg",
-    quote:
-      "I was popping daily antacid capsules just to survive post-lunch burning. Dr. Rashi identified my sedentary schedule and dietary sensitivity. The homeopathic drops brought immediate soothing without a single chemical pill.",
+    quote: isHi
+      ? "दोपहर के खाने के बाद जलन से बचने के लिए मैं रोज़ाना गैस का कैप्सूल खाता था। डॉ. राशी की होम्योपैथिक बूंदों ने बिना किसी केमिकल दवा के मुझे तुरंत और स्थायी आराम दिया।"
+      : "I was popping daily antacid capsules just to survive post-lunch burning. Dr. Rashi identified my sedentary schedule and dietary sensitivity. The homeopathic drops brought immediate soothing without a single chemical pill.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
   },
   {
-    name: "Pooja & Master Aarav (6 yrs)",
+    name: isHi ? "पूजा एवं आरव (6 वर्ष)" : "Pooja & Master Aarav (6 yrs)",
     age: 32,
-    location: "Jabalpur, MP",
-    condition: "Recurrent Child Cold & Wheezing",
-    improvement: "90% This Season",
-    duration: "Preventive Care",
+    location: isHi ? "जबलपुर, मध्य प्रदेश" : "Jabalpur, MP",
+    condition: isHi ? "बच्चों में बार-बार सर्दी व सांस फूलना" : "Recurrent Child Cold & Wheezing",
+    improvement: isHi ? "इस मौसम में 90% बचाव" : "90% This Season",
+    duration: isHi ? "सुरक्षात्मक देखभाल" : "Preventive Care",
     remedy: "Tuberculinum 200 + Calc Phos",
-    quote:
-      "Every weather change used to mean nebulizer masks and antibiotic courses for my son. Dr. Rashi's sweet sugar pills boosted Aarav's natural chest resistance so well that he hasn't missed a single school day this winter!",
+    quote: isHi
+      ? "मौसम बदलते ही मेरे 6 वर्षीय बेटे को नेबुलाइज़र और एंटीबायोटिक की जरूरत पड़ती थी। डॉ. राशी की मीठी गोलियों ने आरव की छाती की प्रतिरोधक क्षमता इतनी बढ़ा दी कि इस सर्दी में उसने एक भी स्कूल मिस नहीं किया!"
+      : "Every weather change used to mean nebulizer masks and antibiotic courses for my son. Dr. Rashi's sweet sugar pills boosted Aarav's natural chest resistance so well that he hasn't missed a single school day this winter!",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
   },
 ];
 
 const Benefits = () => {
+  const { t, i18n } = useTranslation();
+  const isHi = i18n.language?.startsWith("hi");
+  const treatmentSteps = getTreatmentSteps(isHi);
+  const patientTransformations = getPatientTransformations(isHi);
+
   return (
     <section
       id="benefits"
@@ -85,16 +100,18 @@ const Benefits = () => {
         <div>
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <span className="px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-xs font-bold text-indigo-700 dark:text-indigo-300">
-              The Healing Roadmap
+              {isHi ? "उपचार का रोडमैप" : "The Healing Roadmap"}
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-              How Your Consultation &{" "}
+              {isHi ? "आपका परामर्श एवं " : "How Your Consultation & "}
               <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Recovery Works
+                {isHi ? "रिकवरी प्रक्रिया" : "Recovery Works"}
               </span>
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-              A transparent, supportive healthcare journey combining ancient homeopathic depth with modern digital ease.
+              {isHi
+                ? "प्राचीन क्लासिकल होम्योपैथी की गहराई और आधुनिक डिजिटल तकनीक का एक पारदर्शी व विश्वसनीय संगम।"
+                : "A transparent, supportive healthcare journey combining ancient homeopathic depth with modern digital ease."}
             </p>
           </div>
 
@@ -126,7 +143,7 @@ const Benefits = () => {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-gray-100 dark:border-slate-700/50 flex items-center text-xs font-bold text-indigo-600 dark:text-indigo-400">
-                  <span>Step {idx + 1} of 3</span>
+                  <span>{isHi ? `चरण ${idx + 1} / 3` : `Step ${idx + 1} of 3`}</span>
                 </div>
               </motion.div>
             ))}
@@ -137,16 +154,18 @@ const Benefits = () => {
         <div>
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <span className="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-emerald-700 dark:text-emerald-300">
-              Verified Case Logs
+              {isHi ? "सत्यापित केस रिकॉर्ड्स" : "Verified Case Logs"}
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-              Real Patient Stories &{" "}
+              {isHi ? "मरीज़ों के वास्तविक अनुभव एवं " : "Real Patient Stories & "}
               <span className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                Documented Recovery
+                {isHi ? "सत्यापित रिकवरी" : "Documented Recovery"}
               </span>
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-              Explore how constitutional homeopathy transformed lives with zero toxicity and lasting wellness.
+              {isHi
+                ? "जानिए कैसे संवैधानिक होम्योपैथी ने बिना किसी दुष्प्रभाव के हज़ारों जीवन में स्थायी स्वास्थ्य लाया।"
+                : "Explore how constitutional homeopathy transformed lives with zero toxicity and lasting wellness."}
             </p>
           </div>
 
@@ -178,7 +197,9 @@ const Benefits = () => {
 
                   {/* Remedy Used Tag */}
                   <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-900 border border-gray-200/80 dark:border-slate-700 text-[11px] text-gray-600 dark:text-gray-300 mb-6">
-                    <span className="font-bold text-gray-900 dark:text-white block">Prescribed Simillimum:</span>
+                    <span className="font-bold text-gray-900 dark:text-white block">
+                      {isHi ? "निर्धारित मुख्य औषधि:" : "Prescribed Simillimum:"}
+                    </span>
                     <span>{patient.remedy}</span>
                   </div>
                 </div>
@@ -192,7 +213,7 @@ const Benefits = () => {
                   />
                   <div>
                     <h4 className="text-sm font-bold text-gray-900 dark:text-white">
-                      {patient.name} ({patient.age} yrs)
+                      {patient.name} ({patient.age} {isHi ? "वर्ष" : "yrs"})
                     </h4>
                     <p className="text-[11px] text-gray-500 dark:text-gray-400">
                       {patient.location} • <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{patient.condition}</span>
@@ -208,7 +229,7 @@ const Benefits = () => {
               to="/appointment"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-xl shadow-indigo-500/20 transition hover:scale-105"
             >
-              Start Your Own Recovery Journey (₹500) <FiArrowRight />
+              {isHi ? "अपनी स्वास्थ्य यात्रा आज ही शुरू करें (₹500)" : "Start Your Own Recovery Journey (₹500)"} <FiArrowRight />
             </Link>
           </div>
         </div>

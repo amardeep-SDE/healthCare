@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FiPhoneCall,
   FiMail,
@@ -15,17 +16,24 @@ import { FaWhatsapp } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const Contact = () => {
+  const { t, i18n } = useTranslation();
+  const isHi = i18n.language?.startsWith("hi");
+
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.phone) {
-      toast.error("Please enter your name and phone number");
+      toast.error(isHi ? "कृपया अपना नाम और फ़ोन नंबर दर्ज करें" : "Please enter your name and phone number");
       return;
     }
     setSubmitted(true);
-    toast.success("Thank you! Dr. Rashi's clinic reception will contact you shortly.");
+    toast.success(
+      isHi
+        ? "धन्यवाद! डॉ. राशी का क्लिनिक रिसेप्शन आपसे शीघ्र संपर्क करेगा।"
+        : "Thank you! Dr. Rashi's clinic reception will contact you shortly."
+    );
     setForm({ name: "", phone: "", message: "" });
   };
 
@@ -39,16 +47,18 @@ const Contact = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-xs font-bold text-indigo-700 dark:text-indigo-300">
-            Clinic Connect & Assistance
+            {isHi ? "क्लिनिक संपर्क एवं सहायता" : "Clinic Connect & Assistance"}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            Visit Our Clinic or{" "}
+            {isHi ? "हमारे क्लिनिक पर आएं या " : "Visit Our Clinic or "}
             <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Consult from Anywhere
+              {isHi ? "घर बैठे ऑनलाइन परामर्श लें" : "Consult from Anywhere"}
             </span>
           </h2>
           <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-            Reach out directly for appointment inquiries, follow-up dosage guidance, or medical report reviews.
+            {isHi
+              ? "अपॉइंटमेंट पूछताछ, दवा खुराक मार्गदर्शन, या मेडिकल रिपोर्ट समीक्षा के लिए सीधे संपर्क करें।"
+              : "Reach out directly for appointment inquiries, follow-up dosage guidance, or medical report reviews."}
           </p>
         </div>
 
@@ -65,8 +75,12 @@ const Contact = () => {
                 <div className="p-3 w-fit rounded-2xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400">
                   <FiPhoneCall size={22} />
                 </div>
-                <h4 className="text-sm font-bold text-gray-900 dark:text-white">Call Reception</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Mon - Sat: 10:00 AM - 07:00 PM</p>
+                <h4 className="text-sm font-bold text-gray-900 dark:text-white">
+                  {isHi ? "रिसेप्शन पर कॉल करें" : "Call Reception"}
+                </h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {isHi ? "सोम - शनि: सुबह 10:00 से शाम 07:00" : "Mon - Sat: 10:00 AM - 07:00 PM"}
+                </p>
                 <a
                   href="tel:+919876543210"
                   className="block text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
@@ -80,15 +94,19 @@ const Contact = () => {
                 <div className="p-3 w-fit rounded-2xl bg-emerald-50 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400">
                   <FaWhatsapp size={22} />
                 </div>
-                <h4 className="text-sm font-bold text-gray-900 dark:text-white">Instant WhatsApp</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Case queries & prescription refills</p>
+                <h4 className="text-sm font-bold text-gray-900 dark:text-white">
+                  {isHi ? "इंस्टेंट व्हाट्सएप" : "Instant WhatsApp"}
+                </h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {isHi ? "केस संबंधी प्रश्न एवं दवा रीफिल" : "Case queries & prescription refills"}
+                </p>
                 <a
                   href="https://wa.me/919876543210?text=Hello%20Dr.%20Rashi,%20I%20would%20like%20to%20inquire%20about%20a%20homeopathy%20consultation."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
                 >
-                  Chat on WhatsApp →
+                  {isHi ? "व्हाट्सएप पर चैट करें →" : "Chat on WhatsApp →"}
                 </a>
               </div>
 
@@ -99,12 +117,18 @@ const Contact = () => {
                     <FiMapPin size={22} />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-gray-900 dark:text-white">Clinic Address</h4>
+                    <h4 className="text-sm font-bold text-gray-900 dark:text-white">
+                      {isHi ? "क्लिनिक का पता" : "Clinic Address"}
+                    </h4>
                     <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mt-1">
-                      Dr. Rashi Homeopathic Healing Clinic, 2nd Floor, Healthcare Arcade, Near 56 Dukan, New Palasia, Indore, MP - 452001
+                      {isHi
+                        ? "डॉ. राशी होम्योपैथिक हीलिंग क्लिनिक, द्वितीय तल, हेल्थकेयर आर्केड, 56 दुकान के पास, न्यू पलासिया, इंदौर, म.प्र. - 452001"
+                        : "Dr. Rashi Homeopathic Healing Clinic, 2nd Floor, Healthcare Arcade, Near 56 Dukan, New Palasia, Indore, MP - 452001"}
                     </p>
                     <p className="text-[11px] text-gray-400 mt-1">
-                      (Also holding periodic outstation clinics in Kolar Road, Bhopal MP)
+                      {isHi
+                        ? "(कोलार रोड, भोपाल में भी नियमित समय-समय पर परामर्श उपलब्ध)"
+                        : "(Also holding periodic outstation clinics in Kolar Road, Bhopal MP)"}
                     </p>
                   </div>
                 </div>
@@ -133,24 +157,26 @@ const Contact = () => {
             
             <div className="space-y-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs font-bold">
-                <FiCalendar /> Request Free Callback
+                <FiCalendar /> {isHi ? "निःशुल्क कॉलबैक का अनुरोध करें" : "Request Free Callback"}
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                Have Questions Before Booking?
+                {isHi ? "बुकिंग से पहले कोई प्रश्न है?" : "Have Questions Before Booking?"}
               </h3>
               <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                Leave your details below and our clinic reception will call you back within 2 business hours to explain treatment duration and slot availability.
+                {isHi
+                  ? "नीचे अपना विवरण दर्ज करें, हमारे क्लिनिक का रिसेप्शन 2 कार्य घंटों के भीतर आपको कॉल करके उपचार की अवधि और स्लॉट की जानकारी देगा।"
+                  : "Leave your details below and our clinic reception will call you back within 2 business hours to explain treatment duration and slot availability."}
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
-                  Full Name
+                  {isHi ? "पूरा नाम *" : "Full Name *"}
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Rahul Sharma"
+                  placeholder={isHi ? "उदा. राहुल शर्मा" : "e.g. Rahul Sharma"}
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 outline-none transition"
@@ -160,11 +186,11 @@ const Contact = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
-                  Phone Number
+                  {isHi ? "फ़ोन नंबर *" : "Phone Number *"}
                 </label>
                 <input
                   type="tel"
-                  placeholder="e.g. +91 98234 56789"
+                  placeholder={isHi ? "उदा. +91 98234 56789" : "e.g. +91 98234 56789"}
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 outline-none transition"
@@ -174,11 +200,15 @@ const Contact = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
-                  Health Concern / Symptoms (Optional)
+                  {isHi ? "स्वास्थ्य समस्या / मुख्य लक्षण (वैकल्पिक)" : "Health Concern / Symptoms (Optional)"}
                 </label>
                 <textarea
                   rows="3"
-                  placeholder="Briefly describe your skin, gastric, or hair concerns..."
+                  placeholder={
+                    isHi
+                      ? "अपनी त्वचा, बाल, पाचन या अन्य स्वास्थ्य समस्या का संक्षेप में वर्णन करें..."
+                      : "Briefly describe your skin, gastric, or hair concerns..."
+                  }
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   className="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 outline-none transition"
@@ -189,20 +219,22 @@ const Contact = () => {
                 type="submit"
                 className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 transition hover:scale-[1.01]"
               >
-                <FiSend /> Request Callback
+                <FiSend /> {isHi ? "कॉलबैक का अनुरोध भेजें" : "Request Callback"}
               </button>
             </form>
 
             {/* Direct Booking Highlight Link */}
             <div className="pt-4 border-t border-gray-100 dark:border-slate-700/60 text-center">
               <span className="text-xs text-gray-500 dark:text-gray-400 block mb-2">
-                Ready to consult Dr. Rashi directly?
+                {isHi ? "क्या आप सीधे डॉ. राशी से परामर्श लेना चाहते हैं?" : "Ready to consult Dr. Rashi directly?"}
               </span>
               <Link
                 to="/appointment"
                 className="inline-flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
               >
-                Book Confirmed Consultation Slot (₹500) →
+                {isHi
+                  ? "कन्फ़र्म परामर्श स्लॉट बुक करें (₹500) →"
+                  : "Book Confirmed Consultation Slot (₹500) →"}
               </Link>
             </div>
 

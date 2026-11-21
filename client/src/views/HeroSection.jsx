@@ -157,7 +157,7 @@ const HeroSection = () => {
                     <span className="font-bold text-gray-900 dark:text-white ml-1">4.9/5</span>
                   </div>
                   <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                    From 1,450+ Recovered Patients
+                    {i18n.language?.startsWith("hi") ? "1,450+ स्वस्थ मरीज़ों का भरोसा" : "From 1,450+ Recovered Patients"}
                   </p>
                 </div>
               </div>
@@ -165,9 +165,11 @@ const HeroSection = () => {
               <div className="hidden sm:block h-6 w-[1px] bg-gray-200 dark:bg-slate-800" />
 
               <div className="text-left">
-                <p className="text-xs font-bold text-gray-900 dark:text-white">Next Available Slot</p>
+                <p className="text-xs font-bold text-gray-900 dark:text-white">
+                  {i18n.language?.startsWith("hi") ? "अगला उपलब्ध स्लॉट" : "Next Available Slot"}
+                </p>
                 <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
-                  <FiClock size={12} /> Today at 11:30 AM (Online / Clinic)
+                  <FiClock size={12} /> {i18n.language?.startsWith("hi") ? "आज सुबह 11:30 बजे (ऑनलाइन / क्लिनिक)" : "Today at 11:30 AM (Online / Clinic)"}
                 </p>
               </div>
             </div>
@@ -190,7 +192,7 @@ const HeroSection = () => {
               {/* Image Frame with Badges */}
               <div className="relative rounded-2xl overflow-hidden aspect-[4/4] bg-gradient-to-b from-indigo-100 to-indigo-50 dark:from-slate-800 dark:to-slate-900 border border-indigo-100 dark:border-slate-700 shadow-inner">
                 <img
-                  src="https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=800&q=80"
+                  src="/doctor-rashi.jpg"
                   alt="Dr. Rashi Shrivastava BHMS"
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
                 />

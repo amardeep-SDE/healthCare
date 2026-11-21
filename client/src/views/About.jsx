@@ -68,7 +68,7 @@ const AboutSection = () => {
           >
             <div className="relative mx-auto max-w-sm rounded-3xl overflow-hidden border-2 border-indigo-100 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-800">
               <img
-                src="https://images.unsplash.com/photo-1594824813637-4b7264a856be?auto=format&fit=crop&w=800&q=80"
+                src="/doctor-rashi.jpg"
                 alt="Dr. Rashi Shrivastava"
                 className="w-full aspect-[4/5] object-cover object-top"
               />
@@ -91,12 +91,12 @@ const AboutSection = () => {
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800/80">
-                    <span className="text-gray-400 block text-[10px] uppercase">Specialty</span>
-                    <span className="font-bold text-gray-800 dark:text-gray-200">Chronic & Skin</span>
+                    <span className="text-gray-400 block text-[10px] uppercase">{isHi ? "विशेषज्ञता" : "Specialty"}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200">{isHi ? "गंभीर एवं त्वचा रोग" : "Chronic & Skin"}</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800/80">
-                    <span className="text-gray-400 block text-[10px] uppercase">Practice</span>
-                    <span className="font-bold text-gray-800 dark:text-gray-200">Classical Miasm</span>
+                    <span className="text-gray-400 block text-[10px] uppercase">{isHi ? "उपचार पद्धति" : "Practice"}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200">{isHi ? "क्लासिकल मियाज़्म" : "Classical Miasm"}</span>
                   </div>
                 </div>
 
@@ -104,7 +104,7 @@ const AboutSection = () => {
                   to="/appointment"
                   className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition shadow-md"
                 >
-                  <FiCalendar /> Book 1-on-1 Session
+                  <FiCalendar /> {isHi ? "1-on-1 परामर्श बुक करें" : "Book 1-on-1 Session"}
                 </Link>
               </div>
             </div>
@@ -171,10 +171,12 @@ const AboutSection = () => {
         <div className="mt-12">
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
             <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">
-              Why Classical Homeopathy?
+              {isHi ? "क्लासिकल होम्योपैथी ही क्यों?" : "Why Classical Homeopathy?"}
             </h3>
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-              Understanding the 4 foundational principles that make homeopathy the safest choice for long-term health.
+              {isHi
+                ? "वे 4 मूल सिद्धांत जो होम्योपैथी को स्थायी स्वास्थ्य के लिए सबसे सुरक्षित और प्रभावी विकल्प बनाते हैं।"
+                : "Understanding the 4 foundational principles that make homeopathy the safest choice for long-term health."}
             </p>
           </div>
 
