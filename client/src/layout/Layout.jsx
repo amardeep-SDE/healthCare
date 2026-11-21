@@ -5,11 +5,11 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
       <Header />
       
       {/* Main content area grows to take available space */}
-      <main className="flex-grow">
+      <main className="flex-grow w-full">
         <Outlet />
       </main>
 

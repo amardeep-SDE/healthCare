@@ -33,24 +33,24 @@ export const PatientDashboard = () => {
   }, [appointments]);
 
                   return (
-                  <div className="min-h-screen bg-gray-50/70 dark:bg-gray-950 py-10 px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-7xl mx-auto space-y-8">
+                  <div className="min-h-screen bg-gray-50/70 dark:bg-gray-950 py-6 sm:py-10 px-3 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
                       {/* Welcome Header */}
-                      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-500 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-500 rounded-2xl sm:rounded-3xl p-5 sm:p-10 text-white shadow-xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
                         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                          <div className="flex items-center gap-5">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
                             <img
                               src={user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"}
                               alt={user?.name}
-                              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-white/50 shadow-md"
+                              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-white/50 shadow-md flex-shrink-0"
                             />
                             <div>
                               <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold">
                                 Patient Health Portal
                               </span>
-                            <h1 className="text-2xl sm:text-4xl font-extrabold mt-1">
+                            <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold mt-1">
                               Welcome back, {user?.name || "Patient"} 👋
                             </h1>
                             <p className="text-xs sm:text-sm text-indigo-100 mt-1">
@@ -59,31 +59,31 @@ export const PatientDashboard = () => {
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap items-center gap-3">
+                        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full md:w-auto">
                           <Link
                             to="/patient/profile"
-                            className="px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/30 transition hover:scale-105"
+                            className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/30 transition hover:scale-105 text-center flex-1 sm:flex-initial"
                           >
-                            My Health Profile
+                            My Profile
                           </Link>
                           <Link
                             to="/appointment"
-                            className="px-5 py-2.5 rounded-full bg-white text-indigo-700 hover:bg-indigo-50 text-xs sm:text-sm font-bold shadow-md transition hover:scale-105"
+                            className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-indigo-700 hover:bg-indigo-50 text-xs sm:text-sm font-bold shadow-md transition hover:scale-105 text-center flex-1 sm:flex-initial"
                           >
-                            + Book Consultation
+                            + Book Consult
                           </Link>
                           <Link
                             to="/medicines"
-                            className="px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/30 transition"
+                            className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/30 transition text-center flex-1 sm:flex-initial"
                           >
-                            Dispensary Store
+                            Dispensary
                           </Link>
                         </div>
                       </div>
                     </div>
 
                     {/* Quick KPI Stat Cards */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                       <div
                         onClick={() => setActiveTab("appointments")}
                         className="cursor-pointer bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:border-indigo-300 transition"
@@ -138,7 +138,7 @@ export const PatientDashboard = () => {
                   </div>
 
                   {/* Navigation Tabs */}
-                  <div className="flex items-center gap-2 border-b border-gray-200 dark:border-gray-700 pb-2 overflow-x-auto">
+                  <div className="flex items-center gap-2 border-b border-gray-200 dark:border-gray-700 pb-2 overflow-x-auto scrollbar-none">
                     {[
                       { id: "overview", label: "Dashboard Overview", icon: <FaHeartbeat /> },
                       { id: "tracker", label: "Health & Symptom Tracker", icon: <FiActivity /> },
@@ -148,7 +148,7 @@ export const PatientDashboard = () => {
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition whitespace-nowrap ${activeTab === tab.id
+                        className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition whitespace-nowrap ${activeTab === tab.id
                             ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
                             : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                           }`}

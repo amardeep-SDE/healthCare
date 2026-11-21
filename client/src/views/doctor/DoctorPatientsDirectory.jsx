@@ -347,7 +347,7 @@ export const DoctorPatientsDirectory = () => {
             </div>
 
             {/* Status Filter */}
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto">
+            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 w-full md:w-auto">
               {["All", "Active Treatment", "Cured / Stable"].map((st) => (
                 <button
                   key={st}

@@ -73,7 +73,7 @@ export const DoctorOrdersManagement = () => {
 
         {/* Filter & Search Toolbar */}
         <div className="bg-white dark:bg-gray-800 p-5 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 w-full md:w-auto">
             {["All", "Dispensed", "In Transit", "Delivered"].map((st) => (
               <button
                 key={st}

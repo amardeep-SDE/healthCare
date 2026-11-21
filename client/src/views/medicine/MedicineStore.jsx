@@ -150,7 +150,7 @@ export const MedicineStore = () => {
 
         {/* Filter & Search Bar */}
         <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 w-full md:w-auto">
             {categories.map((cat) => (
               <button
                 key={cat}

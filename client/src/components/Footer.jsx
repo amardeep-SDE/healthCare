@@ -13,10 +13,10 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-gradient-to-b from-[#FFFFFF] to-[#FFFFFF] dark:from-gray-900 dark:to-slate-800 text-gray-700 dark:text-gray-300 pt-12 px-6 md:px-16 lg:px-24 xl:px-32">
-      <div className="flex flex-wrap justify-between gap-12 md:gap-6">
+    <footer className="bg-gradient-to-b from-[#FFFFFF] to-[#FFFFFF] dark:from-gray-900 dark:to-slate-800 text-gray-700 dark:text-gray-300 pt-12 px-4 sm:px-6 md:px-16 lg:px-24 xl:px-32 w-full overflow-hidden">
+      <div className="flex flex-wrap justify-between gap-10 md:gap-6">
         {/* Logo + About */}
-        <div className="max-w-80">
+        <div className="max-w-full sm:max-w-80">
           <img
             src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/dummyLogo/dummyLogoColored.svg"
             alt="logo"

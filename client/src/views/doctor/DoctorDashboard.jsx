@@ -155,40 +155,40 @@ export const DoctorDashboard = () => {
     <div className="min-h-screen bg-gray-50/70 dark:bg-gray-950 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Doctor Header Banner */}
-        <div className="bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-700 text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-700 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-10 shadow-xl relative overflow-hidden">
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="flex items-center gap-5">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
               <img
                 src={DOCTOR_INFO.avatar}
                 alt={DOCTOR_INFO.name}
-                className="w-20 h-20 rounded-2xl object-cover border-2 border-indigo-400 shadow-md"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-indigo-400 shadow-md flex-shrink-0"
               />
               <div>
                 <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold mb-1">
                   <FiShield /> Certified Practitioner • {DOCTOR_INFO.regNo}
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-extrabold">{DOCTOR_INFO.name}</h1>
+                <h1 className="text-xl sm:text-3xl font-extrabold">{DOCTOR_INFO.name}</h1>
                 <p className="text-xs sm:text-sm text-indigo-200 mt-0.5">
                   {DOCTOR_INFO.qualification} • {DOCTOR_INFO.clinicName}
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full md:w-auto">
               <Link
                 to="/doctor/patients"
-                className="px-5 py-2.5 rounded-full bg-white text-indigo-900 hover:bg-indigo-50 font-bold text-xs sm:text-sm shadow-md transition hover:scale-105 flex items-center gap-1.5"
+                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-indigo-900 hover:bg-indigo-50 font-bold text-xs sm:text-sm shadow-md transition hover:scale-105 flex items-center justify-center gap-1.5 flex-1 sm:flex-initial text-center"
               >
-                <FiUsers /> Patients Directory (EMR)
+                <FiUsers /> Patients Directory
               </Link>
               <Link
                 to="/doctor/orders"
-                className="px-5 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-semibold text-xs sm:text-sm border border-white/30 transition flex items-center gap-1.5"
+                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-semibold text-xs sm:text-sm border border-white/30 transition flex items-center justify-center gap-1.5 flex-1 sm:flex-initial text-center"
               >
-                <FaPills /> Dispensary Orders
+                <FaPills /> Orders
               </Link>
-              <span className="px-4 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+              <span className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                 Clinic Live
               </span>
             </div>
